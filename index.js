@@ -18,6 +18,7 @@ if (process.platform == 'darwin') {
   }
   run('brew services start postgresql@' + postgresVersion);
   run('sleep 10');
+  run('ps aux | grep postgres');
   run('cat /usr/local/var/log/postgres.log');
 } else {
   if (postgresVersion != 13) {
