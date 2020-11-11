@@ -7,11 +7,13 @@ function run(command) {
 
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
 
+if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
+  throw 'Bad Postgres version: ' + postgresVersion;
+}
+
 if (process.platform == 'darwin') {
   if (postgresVersion != 13) {
     run('rm -rf /usr/local/var/postgres');
-    run('brew services stop postgresql');
-    run('brew remove postgresql');
     run('brew install postgresql@' + postgresVersion);
   }
   run('brew services start postgresql@' + postgresVersion);
