@@ -1,6 +1,6 @@
 # setup-postgres
 
-The missing action for Postgres - no need to use containers :tada:
+The missing action for Postgres - no need for containers :tada:
 
 Supports:
 
