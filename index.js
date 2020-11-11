@@ -13,15 +13,14 @@ if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
 
 if (process.platform == 'darwin') {
   const bin = '/usr/local/opt/postgresql@' + postgresVersion + '/bin';
+  let dataDir = '/usr/local/var/postgres';
   if (postgresVersion != 13) {
-    const dataDir = '/usr/local/var/postgres@' + postgresVersion;
+    dataDir = dataDir + '@' + postgresVersion;
     run('brew install postgresql@' + postgresVersion);
     run(bin + '/initdb --locale=C -E UTF-8 ' + dataDir);
     run(bin + '/pg_ctl -D ' + dataDir + ' start');
-  } else {
-    const dataDir = '/usr/local/var/postgres';
-    run(bin + '/pg_ctl -D ' + dataDir + ' start');
   }
+  run(bin + '/pg_ctl -D ' + dataDir + ' start');
 } else {
   if (postgresVersion != 13) {
     run('sudo pg_dropcluster 13 main');
