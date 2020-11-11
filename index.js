@@ -13,14 +13,13 @@ if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
 
 if (process.platform == 'darwin') {
   if (postgresVersion != 13) {
+    run('brew remove postgresql');
     run('rm -rf /usr/local/var/postgres');
     run('brew install postgresql@' + postgresVersion);
-    run('/usr/local/opt/postgresql@' + postgresVersion + '/bin/initd --locale=C -E UTF-8 /usr/local/var/postgres');
+    run('/usr/local/opt/postgresql@' + postgresVersion + '/bin/initdb --locale=C -E UTF-8 /usr/local/var/postgres');
   }
   run('brew services start postgresql@' + postgresVersion);
-  run('sleep 10');
-  run('ps aux | grep postgres');
-  run('cat /usr/local/var/log/postgres.log');
+  run('echo "/usr/local/opt/postgresql@' + postgresVersion + '/bin" >> $GITHUB_PATH')
 } else {
   if (postgresVersion != 13) {
     run('sudo pg_dropcluster 13 main');
