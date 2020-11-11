@@ -4,7 +4,7 @@ The missing action for Postgres :tada:
 
 - Faster and simpler than containers
 - Works on Linux and Mac
-- Supports many different versions (`13`, `12`, `11`, `10`, and `9.6`)
+- Supports different versions
 
 [![Build Status](https://github.com/ankane/setup-postgres/workflows/build/badge.svg?branch=v1)](https://github.com/ankane/setup-postgres/actions)
 
@@ -25,6 +25,8 @@ Specify a version (defaults to the latest)
       with:
         postgres-version: 13
 ```
+
+Currently supports `13`, `12`, `11`, `10`, and `9.6`
 
 Test against multiple versions
 
