@@ -18,7 +18,6 @@ if (process.platform == 'darwin') {
     dataDir = dataDir + '@' + postgresVersion;
     run('brew install postgresql@' + postgresVersion);
     run(bin + '/initdb --locale=C -E UTF-8 ' + dataDir);
-    run(bin + '/pg_ctl -D ' + dataDir + ' start');
   }
   run(bin + '/pg_ctl -D ' + dataDir + ' start');
 } else {
