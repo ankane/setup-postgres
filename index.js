@@ -19,7 +19,8 @@ if (process.platform == 'darwin') {
     run('/usr/local/opt/postgresql@' + postgresVersion + '/bin/initdb --locale=C -E UTF-8 /usr/local/var/postgres');
   }
   run('brew services start postgresql@' + postgresVersion);
-  run('echo "/usr/local/opt/postgresql@' + postgresVersion + '/bin" >> $GITHUB_PATH')
+  run('echo "/usr/local/opt/postgresql@' + postgresVersion + '/bin" >> $GITHUB_PATH');
+  run('sleep 3');
 } else {
   if (postgresVersion != 13) {
     run('sudo pg_dropcluster 13 main');
