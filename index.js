@@ -8,7 +8,7 @@ function run(command) {
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
 
 if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
-  throw 'Bad Postgres version: ' + postgresVersion;
+  throw 'Invalid Postgres version: ' + postgresVersion;
 }
 
 if (process.platform == 'darwin') {
