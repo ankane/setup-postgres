@@ -10,10 +10,12 @@ const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
 if (process.platform == 'darwin') {
   if (postgresVersion != 13) {
     run('rm -rf /usr/local/var/postgres');
+    run('brew remove postgresql');
     run('brew install postgresql@' + postgresVersion);
   }
   run('brew services start postgresql@' + postgresVersion);
   run('sleep 10');
+  run('cat /usr/local/var/log/postgres.log');
 } else {
   if (postgresVersion != 13) {
     run('sudo pg_dropcluster 13 main');
