@@ -1,11 +1,10 @@
 # setup-postgres
 
-The missing action for Postgres - no need for containers :tada:
+The missing action for Postgres :tada:
 
-Supports:
-
-- Linux and Mac (`ubuntu-20.04`, `ubuntu-18.04`, `ubuntu-16.04`, and `macos-10.15`)
-- Different versions (`13`, `12`, `11`, `10`, and `9.6`)
+- Faster and simpler than containers
+- Works on Linux and Mac
+- Supports many different versions (`13`, `12`, `11`, `10`, and `9.6`)
 
 [![Build Status](https://github.com/ankane/setup-postgres/workflows/build/badge.svg?branch=v1)](https://github.com/ankane/setup-postgres/actions)
 
