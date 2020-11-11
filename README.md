@@ -45,6 +45,10 @@ jobs:
         postgres-version: ${{ matrix.postgres-version }}
 ```
 
+## Related Actions
+
+- [setup-mysql](https://github.com/ankane/setup-mysql)
+
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
