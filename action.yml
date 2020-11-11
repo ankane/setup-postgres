@@ -1,0 +1,7 @@
+name: Setup Postgres
+inputs:
+  postgres-version:
+    description: The Postgres version to download (if necessary) and use
+runs:
+  using: node12
+  main: index.js
