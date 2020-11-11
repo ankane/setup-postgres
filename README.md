@@ -14,18 +14,12 @@ Supports:
 Add it as a step to your workflow
 
 ```yml
-jobs:
-  build:
-    steps:
     - uses: ankane/setup-postgres@v1
 ```
 
 Specify a version (defaults to the latest if no version is specified)
 
 ```yml
-jobs:
-  build:
-    steps:
     - uses: ankane/setup-postgres@v1
       with:
         postgres-version: 13
@@ -34,8 +28,6 @@ jobs:
 Test against multiple versions
 
 ```yml
-jobs:
-  build:
     strategy:
       matrix:
         postgres-version: [13, 12, 11, 10, 9.6]
