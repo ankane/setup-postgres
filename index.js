@@ -15,6 +15,7 @@ if (process.platform == 'darwin') {
   if (postgresVersion != 13) {
     run('rm -rf /usr/local/var/postgres');
     run('brew install postgresql@' + postgresVersion);
+    run('/usr/local/opt/postgresql@' + postgresVersion + '/bin/initd --locale=C -E UTF-8 /usr/local/var/postgres');
   }
   run('brew services start postgresql@' + postgresVersion);
   run('sleep 10');
