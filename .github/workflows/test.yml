@@ -15,4 +15,4 @@ jobs:
         postgres-version: ${{ matrix.postgres-version }}
     - run: |
         createdb setup_postgres_test
-        psql -d setup_postgres_test -c 'SELECT 1 AS hello'
+        psql -d setup_postgres_test -c 'SHOW server_version'
