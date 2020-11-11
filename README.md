@@ -48,6 +48,7 @@ jobs:
 ## Related Actions
 
 - [setup-mysql](https://github.com/ankane/setup-mysql)
+- [setup-mongodb](https://github.com/ankane/setup-mongodb)
 
 ## Contributing
 
