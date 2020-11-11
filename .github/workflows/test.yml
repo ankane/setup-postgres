@@ -16,4 +16,4 @@ jobs:
     - run: |
         createdb testdb
         psql -d testdb -c 'SHOW server_version'
-        ls -l `which psql`
+    - run: psql --version
