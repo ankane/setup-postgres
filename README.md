@@ -20,7 +20,7 @@ jobs:
     - uses: ankane/setup-postgres@v1
 ```
 
-Specify a version (defaults to `13` if no version is specified)
+Specify a version (defaults to the latest if no version is specified)
 
 ```yml
 jobs:
@@ -28,7 +28,7 @@ jobs:
     steps:
     - uses: ankane/setup-postgres@v1
       with:
-        postgres-version: 12
+        postgres-version: 13
 ```
 
 Test against multiple versions
