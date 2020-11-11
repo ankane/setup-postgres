@@ -44,3 +44,12 @@ jobs:
       with:
         postgres-version: ${{ matrix.postgres-version }}
 ```
+
+## Contributing
+
+Everyone is encouraged to help improve this project. Here are a few ways you can help:
+
+- [Report bugs](https://github.com/ankane/setup-postgres/issues)
+- Fix bugs and [submit pull requests](https://github.com/ankane/setup-postgres/pulls)
+- Write, clarify, or fix documentation
+- Suggest or add new features
