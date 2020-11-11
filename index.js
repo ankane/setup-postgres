@@ -9,6 +9,7 @@ const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
 
 if (process.platform == 'darwin') {
   run('brew install postgresql@' + postgresVersion);
+  run('brew services start postgresql@' + postgresVersion);
 } else {
   if (postgresVersion != 13) {
     run('sudo pg_dropcluster 13 main');
