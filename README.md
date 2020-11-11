@@ -37,6 +37,8 @@ Test against multiple versions
         postgres-version: ${{ matrix.postgres-version }}
 ```
 
+## Extra Steps
+
 Create a database
 
 ```yml
