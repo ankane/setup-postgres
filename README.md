@@ -1,6 +1,11 @@
 # setup-postgres
 
-Action to set up Postgres
+:fire: Action to set up Postgres
+
+Supports:
+
+- Linux and Mac
+- Many versions (`13`, `12`, `11`, `10`, and `9.6`)
 
 [![Build Status](https://github.com/ankane/setup-postgres/workflows/build/badge.svg?branch=v1)](https://github.com/ankane/setup-postgres/actions)
 

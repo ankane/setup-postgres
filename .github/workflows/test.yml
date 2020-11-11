@@ -2,9 +2,10 @@ name: build
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest]
         postgres-version: [13, 12, 11, 10, 9.6]
     steps:
     - uses: ankane/setup-postgres@v1
