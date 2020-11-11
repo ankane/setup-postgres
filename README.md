@@ -4,7 +4,7 @@
 
 Supports:
 
-- Linux and Mac
+- Linux and Mac (`ubuntu-20.04`, `ubuntu-18.04`, `ubuntu-16.04`, and `macos-10.15`)
 - Many versions (`13`, `12`, `11`, `10`, and `9.6`)
 
 [![Build Status](https://github.com/ankane/setup-postgres/workflows/build/badge.svg?branch=v1)](https://github.com/ankane/setup-postgres/actions)
