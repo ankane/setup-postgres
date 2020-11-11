@@ -1,3 +1,4 @@
+const appendFileSync = require('fs').appendFileSync;
 const execSync = require('child_process').execSync;
 
 function run(command) {
@@ -29,7 +30,18 @@ if (process.platform == 'darwin') {
   run(`${bin}/pg_ctl -D ${dataDir} start`);
 
   // set path
-  run(`echo "${bin}" >> $GITHUB_PATH`);
+  appendFileSync(process.env.GITHUB_PATH, bin);
+} else if (process.platform == 'win32') {
+  if (postgresVersion != 13) {
+    throw `Postgres version not supported on Windows: ${postgresVersion}`;
+  }
+
+  // start
+  run(`sc config postgresql-x64-13 start=auto`);
+  run(`net start postgresql-x64-13`);
+
+  // set path
+  appendFileSync(process.env.GITHUB_PATH, process.env.PGBIN);
 } else {
   if (postgresVersion != 13) {
     // remove previous cluster so port 5432 is used
