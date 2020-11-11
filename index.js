@@ -13,14 +13,15 @@ if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
 
 if (process.platform == 'darwin') {
   const bin = '/usr/local/opt/postgresql@' + postgresVersion + '/bin';
+  const dataDir = '/usr/local/var/postgres@' + postgresVersion;
   if (postgresVersion != 13) {
     // run('brew remove postgresql');
     // run('rm -rf /usr/local/var/postgres');
     run('brew install postgresql@' + postgresVersion);
-    run(bin + '/initdb --locale=C -E UTF-8 /usr/local/var/postgres@' + postgresVersion);
+    run(bin + '/initdb --locale=C -E UTF-8 ' + dataDir);
   }
   // run('brew services start postgresql@' + postgresVersion);
-  run(bin + '/pg_ctl -D /usr/local/var/postgres@12 start');
+  run(bin + '/pg_ctl -D ' + dataDir + ' start');
   run('echo "' + bin + '" >> $GITHUB_PATH');
   run('sleep 10');
   run('cat /usr/local/var/log/postgres.log')
