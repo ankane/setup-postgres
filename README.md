@@ -27,7 +27,7 @@ jobs:
   build:
     strategy:
       matrix:
-        postgres-version: [9.6, 10, 11, 12, 13]
+        postgres-version: [13, 12, 11, 10, 9.6]
     steps:
     - uses: ankane/setup-postgres@v1
       with:

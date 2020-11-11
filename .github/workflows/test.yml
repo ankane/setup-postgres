@@ -1,0 +1,15 @@
+name: build
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        postgres-version: [13, 12, 11, 10, 9.6]
+    steps:
+    - uses: ankane/setup-postgres@v1
+      with:
+        postgres-version: ${{ matrix.postgres-version }}
+    - run: |
+        createdb setup_postgres_test
+        psql -d setup_postgres_test -c 'SELECT 1'
