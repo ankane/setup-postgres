@@ -1,6 +1,6 @@
 # setup-postgres
 
-:fire: Action to set up Postgres
+The missing action for Postgres - no need to use containers :tada:
 
 Supports:
 
@@ -11,7 +11,7 @@ Supports:
 
 ## Getting Started
 
-Add it to your workflow
+Add it as a step to your workflow
 
 ```yml
 jobs:
