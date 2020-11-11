@@ -37,6 +37,18 @@ Test against multiple versions
         postgres-version: ${{ matrix.postgres-version }}
 ```
 
+Create a database
+
+```yml
+    - run: createdb testdb
+```
+
+Run queries
+
+```yml
+    - run: psql -d testdb -c 'SHOW server_version'
+```
+
 ## Related Actions
 
 - [setup-mysql](https://github.com/ankane/setup-mysql)
