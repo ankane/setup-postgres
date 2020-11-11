@@ -8,15 +8,16 @@ function run(command) {
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
 
 if (process.platform == 'darwin') {
-  run('brew install postgresql@' + postgresVersion);
+  if (postgresVersion != 13) {
+    run('rm -rf /usr/local/var/postgres');
+    run('brew install postgresql@' + postgresVersion);
+  }
   run('brew services start postgresql@' + postgresVersion);
-  run('sleep 1');
 } else {
   if (postgresVersion != 13) {
     run('sudo pg_dropcluster 13 main');
+    run('sudo apt-get install postgresql-' + postgresVersion);
   }
-
-  run('sudo apt-get install postgresql-' + postgresVersion);
   run('sudo systemctl start postgresql@' + postgresVersion + '-main');
   run('sudo -u postgres createuser -s $USER');
 }
