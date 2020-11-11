@@ -1,6 +1,12 @@
-## setup-postgres
+# setup-postgres
 
 Action to set up Postgres
+
+[![Build Status](https://github.com/ankane/setup-postgres/workflows/build/badge.svg?branch=v1)](https://github.com/ankane/setup-postgres/actions)
+
+## Getting Started
+
+Add it to your workflow
 
 ```yml
 jobs:
