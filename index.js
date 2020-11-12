@@ -7,9 +7,23 @@ function run(command) {
   execSync(command, {stdio: 'inherit'});
 }
 
+function isMac() {
+  return process.platform == 'darwin';
+}
+
+function isWindows() {
+  return process.platform == 'win32';
+}
+
 function enablePgStatStatements(dir) {
-  const conf = path.join(dir, 'postgresql.conf');
-  run(`echo "shared_preload_libraries = 'pg_stat_statements'" | sudo tee -a ${conf}`);
+  const file = path.join(dir, 'postgresql.conf');
+  const contents = `shared_preload_libraries = 'pg_stat_statements'\n`;
+
+  if (isMac() || isWindows()) {
+    fs.appendFileSync(file, contents);
+  } else {
+    run(`echo "${contents}" | sudo tee -a ${file}`);
+  }
 }
 
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
@@ -18,7 +32,7 @@ if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
 }
 
-if (process.platform == 'darwin') {
+if (isMac()) {
   const bin = `/usr/local/opt/postgresql@${postgresVersion}/bin`;
   let dataDir = '/usr/local/var/postgres';
 
@@ -39,10 +53,12 @@ if (process.platform == 'darwin') {
 
   // set path
   fs.appendFileSync(process.env.GITHUB_PATH, bin);
-} else if (process.platform == 'win32') {
+} else if (isWindows()) {
   if (postgresVersion != 13) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
+
+  enablePgStatStatements(process.env.PGROOT);
 
   // start
   run(`sc config postgresql-x64-13 start=auto`);
