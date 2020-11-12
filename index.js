@@ -1,5 +1,5 @@
-const fs = require('fs');
 const execSync = require('child_process').execSync;
+const fs = require('fs');
 const path = require('path');
 
 function run(command) {
@@ -8,7 +8,7 @@ function run(command) {
 }
 
 function enablePgStatStatements(dir) {
-  const conf = path.join(dir, 'postgresql.conf';
+  const conf = path.join(dir, 'postgresql.conf');
   run(`echo "shared_preload_libraries = 'pg_stat_statements'" | sudo tee -a ${conf}`);
 }
 
