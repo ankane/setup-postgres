@@ -20,3 +20,4 @@ jobs:
         createdb testdb
         psql -d testdb -c 'SHOW server_version'
     - run: psql --version
+    - run: pg_config
