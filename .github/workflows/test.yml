@@ -21,6 +21,6 @@ jobs:
         psql -d testdb -c 'SHOW server_version'
     - run: |
         psql -d testdb -c 'CREATE EXTENSION pg_stat_statements'
-        psql -d testdb -c 'SELECT pid FROM pg_stat_statements LIMIT 1'
+        psql -d testdb -c 'SELECT queryid FROM pg_stat_statements LIMIT 1'
     - run: psql --version
     - run: pg_config

@@ -8,8 +8,8 @@ function run(command) {
 }
 
 function enablePgStatStatements(dir) {
-  run(`ls`);
-  fs.appendFileSync(path.join(dir, 'postgresql.conf'), `shared_preload_libraries = 'pg_stat_statements'\n`);
+  const conf = path.join(dir, 'postgresql.conf';
+  run(`echo "shared_preload_libraries = 'pg_stat_statements'" | sudo tee -a ${conf}`);
 }
 
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
@@ -43,8 +43,6 @@ if (process.platform == 'darwin') {
   if (postgresVersion != 13) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
-
-  enablePgStatStatements(process.env.PGROOT);
 
   // start
   run(`sc config postgresql-x64-13 start=auto`);
