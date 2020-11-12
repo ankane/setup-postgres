@@ -85,9 +85,5 @@ if (isMac()) {
   // add user
   run(`sudo -u postgres createuser -s $USER`);
 
-  const bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
-  addToPath(bin);
-
-  // set PG_CONFIG
-  fs.appendFileSync(process.env.GITHUB_ENV, `PG_CONFIG=${bin}/pg_config\n`);
+  addToPath(`/usr/lib/postgresql/${postgresVersion}/bin`);
 }
