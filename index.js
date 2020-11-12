@@ -7,6 +7,10 @@ function run(command) {
   execSync(command, {stdio: 'inherit'});
 }
 
+function addToPath(newPath) {
+  fs.appendFileSync(process.env.GITHUB_PATH, newPath);
+}
+
 function isMac() {
   return process.platform == 'darwin';
 }
@@ -51,8 +55,7 @@ if (isMac()) {
   // start
   run(`${bin}/pg_ctl -D ${dataDir} start`);
 
-  // set path
-  fs.appendFileSync(process.env.GITHUB_PATH, bin);
+  addToPath(bin);
 } else if (isWindows()) {
   if (postgresVersion != 13) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
@@ -64,8 +67,7 @@ if (isMac()) {
   run(`sc config postgresql-x64-13 start=auto`);
   run(`net start postgresql-x64-13`);
 
-  // set path
-  fs.appendFileSync(process.env.GITHUB_PATH, process.env.PGBIN);
+  addToPath(process.env.PGBIN);
 } else {
   if (postgresVersion != 13) {
     // remove previous cluster so port 5432 is used
