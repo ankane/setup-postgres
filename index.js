@@ -26,7 +26,7 @@ function enablePgStatStatements(dir) {
   if (isMac() || isWindows()) {
     fs.appendFileSync(file, contents);
   } else {
-    run(`echo "${contents}" | sudo tee -a ${file}`);
+    execSync(`echo "${contents}" | sudo tee -a ${file}`);
   }
 }
 
