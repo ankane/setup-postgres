@@ -7,17 +7,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-18.04, ubuntu-16.04, macos-10.15]
-        postgres-version: [13, 12, 11, 10, 9.6]
+        os: [ubuntu-20.04, macos-10.15]
+        postgres-version: [13]
         include:
           - os: windows-2019
             postgres-version: 13
     steps:
-    - uses: ankane/setup-postgres@v1
+    - uses: ankane/setup-postgres@pg_stat_statements
       with:
         postgres-version: ${{ matrix.postgres-version }}
     - run: |
         createdb testdb
         psql -d testdb -c 'SHOW server_version'
+    - run: |
+        psql -d testdb -c 'CREATE EXTENSION pg_stat_statements'
+        psql -d testdb -c 'SELECT pid FROM pg_stat_statements LIMIT 1'
     - run: psql --version
     - run: pg_config

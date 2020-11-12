@@ -1,9 +1,15 @@
-const appendFileSync = require('fs').appendFileSync;
+const appendFileSync = require('fs');
 const execSync = require('child_process').execSync;
+const path = require('path');
 
 function run(command) {
   console.log(command);
   execSync(command, {stdio: 'inherit'});
+}
+
+function enablePgStatStatements(dir) {
+  run(`ls`);
+  fs.appendFileSync(path.join(dir, 'postgresql.conf'), `shared_preload_libraries = 'pg_stat_statements'\n`);
 }
 
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
@@ -26,22 +32,26 @@ if (process.platform == 'darwin') {
     run(`${bin}/initdb --locale=C -E UTF-8 ${dataDir}`);
   }
 
+  enablePgStatStatements(dataDir);
+
   // start
   run(`${bin}/pg_ctl -D ${dataDir} start`);
 
   // set path
-  appendFileSync(process.env.GITHUB_PATH, bin);
+  fs.appendFileSync(process.env.GITHUB_PATH, bin);
 } else if (process.platform == 'win32') {
   if (postgresVersion != 13) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
+
+  enablePgStatStatements(process.env.PGROOT);
 
   // start
   run(`sc config postgresql-x64-13 start=auto`);
   run(`net start postgresql-x64-13`);
 
   // set path
-  appendFileSync(process.env.GITHUB_PATH, process.env.PGBIN);
+  fs.appendFileSync(process.env.GITHUB_PATH, process.env.PGBIN);
 } else {
   if (postgresVersion != 13) {
     // remove previous cluster so port 5432 is used
@@ -50,6 +60,8 @@ if (process.platform == 'darwin') {
     // install new version
     run(`sudo apt-get install postgresql-${postgresVersion}`);
   }
+
+  enablePgStatStatements(`/etc/postgresql/${postgresVersion}/main`);
 
   // start
   run(`sudo systemctl start postgresql@${postgresVersion}-main`);
