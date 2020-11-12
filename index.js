@@ -8,7 +8,7 @@ function run(command) {
 }
 
 function addToPath(newPath) {
-  fs.appendFileSync(process.env.GITHUB_PATH, newPath);
+  fs.appendFileSync(process.env.GITHUB_PATH, `${newPath}\n`);
 }
 
 function isMac() {
