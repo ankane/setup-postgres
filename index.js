@@ -58,7 +58,7 @@ if (isMac()) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
 
-  enablePgStatStatements(process.env.PGROOT);
+  enablePgStatStatements(process.env.PGDATA);
 
   // start
   run(`sc config postgresql-x64-13 start=auto`);
