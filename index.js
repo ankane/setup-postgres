@@ -1,4 +1,4 @@
-const appendFileSync = require('fs');
+const fs = require('fs');
 const execSync = require('child_process').execSync;
 const path = require('path');
 
