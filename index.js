@@ -84,4 +84,6 @@ if (isMac()) {
 
   // add user
   run(`sudo -u postgres createuser -s $USER`);
+
+  addToPath(`/usr/lib/postgresql/${postgresVersion}/bin`);
 }
