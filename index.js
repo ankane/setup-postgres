@@ -30,6 +30,19 @@ function enablePgStatStatements(dir) {
   }
 }
 
+function updateHba(dir) {
+  const contents = `
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+local   all             postgres                                peer
+local   all             all                                     peer
+host    all             $USER           127.0.0.1/32            trust
+host    all             $USER           ::1/128                 trust
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+`
+  run(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
+}
+
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
 
 if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
@@ -77,7 +90,9 @@ if (isMac()) {
     run(`sudo apt-get install postgresql-${postgresVersion}`);
   }
 
-  enablePgStatStatements(`/etc/postgresql/${postgresVersion}/main`);
+  const dataDir = `/etc/postgresql/${postgresVersion}/main`;
+  enablePgStatStatements(dataDir);
+  updateHba(dataDir);
 
   // start
   run(`sudo systemctl start postgresql@${postgresVersion}-main`);
