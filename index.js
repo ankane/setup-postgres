@@ -87,6 +87,7 @@ if (isMac()) {
     run(`sudo pg_dropcluster 13 main`);
 
     // install new version
+    run(`sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/pgdg.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"`);
     run(`sudo apt-get install postgresql-${postgresVersion}`);
   }
 
