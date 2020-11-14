@@ -54,9 +54,9 @@ Run queries
     - run: psql -d testdb -c 'SHOW server_version'
 ```
 
-## Configuration
+## Config
 
-Set configuration
+Set config
 
 ```yml
     - uses: ankane/setup-postgres@v1

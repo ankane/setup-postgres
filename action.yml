@@ -3,7 +3,7 @@ inputs:
   postgres-version:
     description: The Postgres version to download (if necessary) and use
   config:
-    description: Set configuration
+    description: Set config
 runs:
   using: node12
   main: index.js
