@@ -56,12 +56,13 @@ Run queries
 
 ## Configuration
 
-Set `shared_preload_libraries`
+Set configuration
 
 ```yml
     - uses: ankane/setup-postgres@v1
       with:
-        shared-preload-libraries: pg_stat_statements
+        config: |
+          shared_preload_libraries = 'pg_stat_statements'
 ```
 
 ## Related Actions
