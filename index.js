@@ -19,6 +19,7 @@ function isWindows() {
   return process.platform == 'win32';
 }
 
+// TODO read each line and replace existing value if needed
 function setConfig(dir) {
   const config = process.env['INPUT_CONFIG'];
   if (config) {
