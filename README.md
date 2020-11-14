@@ -56,7 +56,7 @@ Run queries
 
 ## Config
 
-Set config
+Set `postgresql.conf` config
 
 ```yml
     - uses: ankane/setup-postgres@v1
