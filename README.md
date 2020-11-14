@@ -54,6 +54,16 @@ Run queries
     - run: psql -d testdb -c 'SHOW server_version'
 ```
 
+## Configuration
+
+Set `shared_preload_libraries`
+
+```yml
+    - uses: ankane/setup-postgres@v1
+      with:
+        shared-preload-libraries: pg_stat_statements
+```
+
 ## Related Actions
 
 - [setup-mysql](https://github.com/ankane/setup-mysql)

@@ -2,6 +2,8 @@ name: Setup Postgres
 inputs:
   postgres-version:
     description: The Postgres version to download (if necessary) and use
+  shared-preload-libraries:
+    description: Libraries to be preloaded at server start
 runs:
   using: node12
   main: index.js

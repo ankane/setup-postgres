@@ -19,14 +19,21 @@ function isWindows() {
   return process.platform == 'win32';
 }
 
-function enablePgStatStatements(dir) {
-  const file = path.join(dir, 'postgresql.conf');
-  const contents = `shared_preload_libraries = 'pg_stat_statements'\n`;
+function setSharedPreloadLibraries(dir) {
+  const shared_preload_libraries = process.env['INPUT_SHARED-PRELOAD-LIBRARIES'];
+  if (shared_preload_libraries) {
+    if (!/^[a-z_,]+$/.test(shared_preload_libraries)) {
+      throw `Invalid shared_preload_libraries: ${shared_preload_libraries}`;
+    }
 
-  if (isMac() || isWindows()) {
-    fs.appendFileSync(file, contents);
-  } else {
-    execSync(`echo "${contents}" | sudo tee -a ${file}`);
+    const file = path.join(dir, 'postgresql.conf');
+    const contents = `shared_preload_libraries = '${shared_preload_libraries}'\n`;
+
+    if (isMac() || isWindows()) {
+      fs.appendFileSync(file, contents);
+    } else {
+      execSync(`echo "${contents}" | sudo tee -a ${file}`);
+    }
   }
 }
 
@@ -63,7 +70,7 @@ if (isMac()) {
     run(`${bin}/initdb --locale=C -E UTF-8 ${dataDir}`);
   }
 
-  enablePgStatStatements(dataDir);
+  setSharedPreloadLibraries(dataDir);
 
   // start
   run(`${bin}/pg_ctl -D ${dataDir} start`);
@@ -74,7 +81,7 @@ if (isMac()) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
 
-  enablePgStatStatements(process.env.PGDATA);
+  setSharedPreloadLibraries(process.env.PGDATA);
 
   // start
   run(`sc config postgresql-x64-13 start=auto`);
@@ -92,7 +99,7 @@ if (isMac()) {
   }
 
   const dataDir = `/etc/postgresql/${postgresVersion}/main`;
-  enablePgStatStatements(dataDir);
+  setSharedPreloadLibraries(dataDir);
   updateHba(dataDir);
 
   // start
