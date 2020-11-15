@@ -12,6 +12,8 @@ jobs:
         include:
           - os: windows-2019
             postgres-version: 13
+          - os: windows-2016
+            postgres-version: 13
     steps:
     - uses: ankane/setup-postgres@v1
       with:
