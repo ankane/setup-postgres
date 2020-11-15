@@ -7,13 +7,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-18.04, ubuntu-16.04, macos-10.15]
+        os: [ubuntu-20.04, ubuntu-18.04, ubuntu-16.04, macos-11.0, macos-10.15]
         postgres-version: [13, 12, 11, 10, 9.6]
         include:
-          - os: windows-2019
-            postgres-version: 13
-          - os: windows-2016
-            postgres-version: 13
+        - os: windows-2019
+          postgres-version: 13
+        - os: windows-2016
+          postgres-version: 13
+        # no bottle yet
+        exclude:
+        - os: macos-11.0
+          postgres-version: 9.6
     steps:
     - uses: ankane/setup-postgres@v1
       with:
