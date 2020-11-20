@@ -45,7 +45,7 @@ host    all             $USER           ::1/128                 trust
 host    all             all             127.0.0.1/32            md5
 host    all             all             ::1/128                 md5
 `
-  run(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
+  execSync(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
 }
 
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
