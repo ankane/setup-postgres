@@ -14,10 +14,6 @@ jobs:
           postgres-version: 13
         - os: windows-2016
           postgres-version: 13
-        # no bottle yet
-        exclude:
-        - os: macos-11.0
-          postgres-version: 9.6
     steps:
     - uses: ankane/setup-postgres@v1
       with:
