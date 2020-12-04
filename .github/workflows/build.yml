@@ -17,6 +17,7 @@ jobs:
           shared_preload_libraries = 'pg_stat_statements'
     - run: psql --version
     - run: psql -c 'SHOW server_version'
+    - run: psql -c 'SELECT current_user'
     - run: psql postgres://runneradmin@localhost:5432/runneradmin -c "SHOW server_version"
     - run: createdb testdb
     - run: pg_config
