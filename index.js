@@ -48,7 +48,7 @@ host    all             all             ::1/128                 md5
   if (sudo) {
     execSync(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
   } else {
-    fs.writeFileSync(`${dir}\\pg_hba.conf`, contents);
+    fs.writeFileSync(`${dir}\\pg_hba.conf`, contents.replace(/\$USER/g, 'runner'));
   }
 }
 
