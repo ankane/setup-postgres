@@ -90,7 +90,8 @@ if (isMac()) {
   setConfig(dataDir);
   updateHba(dataDir);
   run(`cat "${dataDir}\\pg_hba.conf"`);
-  run(`echo $USERNAME`);
+  run(`echo %username%`);
+  run(`whoami`);
 
   // start
   run(`sc config postgresql-x64-13 start=auto`);
