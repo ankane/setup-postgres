@@ -18,6 +18,7 @@ jobs:
     - run: psql --version
     - run: psql -c 'SHOW server_version'
     - run: psql -c 'SELECT current_user'
+    - run: psql -c 'SELECT current_database()'
     - run: psql postgres://runneradmin@localhost:5432/runneradmin -c "SHOW server_version"
     - run: createdb testdb
     - run: pg_config
