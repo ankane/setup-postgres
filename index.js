@@ -85,6 +85,7 @@ if (isMac()) {
   const dataDir = process.env.PGDATA;
   setConfig(dataDir);
   updateHba(dataDir);
+  run(`cat "${dataDir}\\pg_hba.conf"`);
 
   // start
   run(`sc config postgresql-x64-13 start=auto`);
