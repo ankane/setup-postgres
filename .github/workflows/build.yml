@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [windows-latest]
         postgres-version: [13]
     steps:
     - uses: ankane/setup-postgres@credentials
@@ -17,6 +17,6 @@ jobs:
           shared_preload_libraries = 'pg_stat_statements'
     - run: psql --version
     - run: psql -c 'SHOW server_version'
-    - run: psql postgres://runner@localhost:5432/runner -c 'SHOW server_version'
+    - run: psql "postgres://runner@localhost:5432/runner" -c "SHOW server_version"
     - run: createdb testdb
     - run: pg_config
