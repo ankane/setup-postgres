@@ -42,7 +42,7 @@ Test against multiple versions
 
 ## Credentials
 
-By default, a user and database are created with the same name as the operating system user (`runner`). This allows you to connect without specifying any credentials
+By default, a user and database are created with the same name as the operating system user (`runner` on Linux and Mac, and `runneradmin` on Windows). This allows you to connect without specifying any credentials
 
 ```yml
     - run: psql -c 'SHOW server_version'
@@ -58,7 +58,7 @@ No password is needed
 
 ## Options
 
-Specify the user (defaults to the operating system user, which is `runner`)
+Specify the user (defaults to the operating system user, which is `runner` on Linux and Mac, and `runneradmin` on Windows)
 
 ```yml
     - uses: ankane/setup-postgres@v1
