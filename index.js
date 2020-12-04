@@ -82,7 +82,9 @@ if (isMac()) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
 
-  setConfig(process.env.PGDATA);
+  const dataDir = process.env.PGDATA;
+  setConfig(dataDir);
+  updateHba(dataDir);
 
   // start
   run(`sc config postgresql-x64-13 start=auto`);
