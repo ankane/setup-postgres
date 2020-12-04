@@ -71,6 +71,7 @@ Set `postgresql.conf` config
 - [setup-mariadb](https://github.com/ankane/setup-mariadb)
 - [setup-mongodb](https://github.com/ankane/setup-mongodb)
 - [setup-elasticsearch](https://github.com/ankane/setup-elasticsearch)
+- [setup-sqlserver](https://github.com/ankane/setup-sqlserver)
 
 ## Contributing
 
