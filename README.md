@@ -51,7 +51,7 @@ By default, a user and database are created with the same name as the operating 
 Or you can use a full connection URI
 
 ```yml
-    - run: psql postgres://runner@localhost:5432/runner -c 'SHOW server_version'
+    - run: psql -c 'SHOW server_version' postgres://runner@localhost:5432/runner
 ```
 
 No password is needed
