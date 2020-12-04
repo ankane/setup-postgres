@@ -35,7 +35,7 @@ function setConfig(dir) {
   }
 }
 
-function updateHba(dir, sudo) {
+function updateHba(dir) {
   const contents = `
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
 local   all             postgres                                peer
@@ -45,10 +45,10 @@ host    all             $USER           ::1/128                 trust
 host    all             all             127.0.0.1/32            md5
 host    all             all             ::1/128                 md5
 `
-  if (sudo) {
-    execSync(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
+  if (isWindows()) {
+    fs.writeFileSync(`${dir}\\pg_hba.conf`, contents.replace(/\$USER  /g, 'runner'));
   } else {
-    fs.writeFileSync(`${dir}\\pg_hba.conf`, contents.replace(/\$USER/g, 'runner'));
+    execSync(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
   }
 }
 
@@ -88,8 +88,9 @@ if (isMac()) {
 
   const dataDir = process.env.PGDATA;
   setConfig(dataDir);
-  updateHba(dataDir, false);
+  updateHba(dataDir);
   run(`cat "${dataDir}\\pg_hba.conf"`);
+  run(`echo $USERNAME`);
 
   // start
   run(`sc config postgresql-x64-13 start=auto`);
@@ -111,7 +112,7 @@ if (isMac()) {
 
   const dataDir = `/etc/postgresql/${postgresVersion}/main`;
   setConfig(dataDir);
-  updateHba(dataDir, true);
+  updateHba(dataDir);
   const bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
 
   // start
