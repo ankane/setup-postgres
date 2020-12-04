@@ -73,6 +73,9 @@ if (isMac()) {
   // start
   run(`${bin}/pg_ctl -D ${dataDir} start`);
 
+  // create database
+  run(`${bin}/createdb $USER`);
+
   addToPath(bin);
 } else if (isWindows()) {
   if (postgresVersion != 13) {
@@ -84,6 +87,9 @@ if (isMac()) {
   // start
   run(`sc config postgresql-x64-13 start=auto`);
   run(`net start postgresql-x64-13`);
+
+  // create database
+  run(`"${process.env.PGBIN}\\createdb" $USER`);
 
   addToPath(process.env.PGBIN);
 } else {
@@ -99,12 +105,16 @@ if (isMac()) {
   const dataDir = `/etc/postgresql/${postgresVersion}/main`;
   setConfig(dataDir);
   updateHba(dataDir);
+  const bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
 
   // start
   run(`sudo systemctl start postgresql@${postgresVersion}-main`);
 
-  // add user
-  run(`sudo -u postgres createuser -s $USER`);
+  // create user
+  run(`sudo -u postgres ${bin}/createuser -s $USER`);
 
-  addToPath(`/usr/lib/postgresql/${postgresVersion}/bin`);
+  // create database
+  run(`${bin}/createdb $USER`);
+
+  addToPath(bin);
 }

@@ -7,21 +7,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-18.04, ubuntu-16.04, macos-11.0, macos-10.15]
-        postgres-version: [13, 12, 11, 10, 9.6]
-        include:
-        - os: windows-2019
-          postgres-version: 13
-        - os: windows-2016
-          postgres-version: 13
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        postgres-version: [13]
     steps:
-    - uses: ankane/setup-postgres@v1
+    - uses: ankane/setup-postgres@credentials
       with:
         postgres-version: ${{ matrix.postgres-version }}
         config: |
           shared_preload_libraries = 'pg_stat_statements'
-    - run: createdb testdb
-    - run: psql -d testdb -c 'SHOW server_version'
-    - run: psql -d testdb -h localhost -c 'SHOW server_version'
     - run: psql --version
+    - run: psql -c 'SHOW server_version'
+    - run: psql postgres://runner@localhost:5432/runner -c 'SHOW server_version'
+    - run: createdb testdb
     - run: pg_config

@@ -40,18 +40,38 @@ Test against multiple versions
         postgres-version: ${{ matrix.postgres-version }}
 ```
 
-## Extra Steps
+## Credentials
 
-Create a database
+By default, a user and database are created with the same name as the operating system user (`runner`). This allows you to connect without specifying any credentials
 
 ```yml
-    - run: createdb testdb
+    - run: psql -c 'SHOW server_version'
 ```
 
-Run queries
+Or you can use a full connection URI
 
 ```yml
-    - run: psql -d testdb -c 'SHOW server_version'
+    - run: psql postgres://runner@localhost:5432/runner -c 'SHOW server_version'
+```
+
+No password is needed
+
+## Options
+
+Specify the user (defaults to the operating system user, which is `runner`)
+
+```yml
+    - uses: ankane/setup-postgres@v1
+      with:
+        user: runner
+```
+
+Specify the database (defaults to the `user` option)
+
+```yml
+    - uses: ankane/setup-postgres@v1
+      with:
+        database: runner
 ```
 
 ## Config
