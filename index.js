@@ -85,7 +85,7 @@ if (isMac()) {
   run(`sc config postgresql-x64-13 start=auto`);
   run(`net start postgresql-x64-13`);
 
-  addToPath(process.env.PGBIN);
+  bin = process.env.PGBIN;
 } else {
   if (postgresVersion != 13) {
     // remove previous cluster so port 5432 is used
