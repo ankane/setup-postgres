@@ -4,6 +4,8 @@ inputs:
     description: The Postgres version to download (if necessary) and use
   config:
     description: Set config
+  database:
+    description: Database to create
 runs:
   using: node12
   main: index.js

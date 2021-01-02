@@ -1,6 +1,7 @@
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 const path = require('path');
+const spawnSync = require('child_process').spawnSync;
 
 function run(command) {
   console.log(command);
@@ -49,13 +50,16 @@ host    all             all             ::1/128                 md5
 }
 
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
+const database = process.env['INPUT_DATABASE'];
 
 if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
 }
 
+let bin;
+
 if (isMac()) {
-  const bin = `/usr/local/opt/postgresql@${postgresVersion}/bin`;
+  bin = `/usr/local/opt/postgresql@${postgresVersion}/bin`;
   let dataDir = '/usr/local/var/postgres';
 
   if (postgresVersion != 13) {
@@ -85,7 +89,7 @@ if (isMac()) {
   run(`sc config postgresql-x64-13 start=auto`);
   run(`net start postgresql-x64-13`);
 
-  addToPath(process.env.PGBIN);
+  bin = process.env.PGBIN;
 } else {
   if (postgresVersion != 13) {
     // remove previous cluster so port 5432 is used
@@ -106,5 +110,15 @@ if (isMac()) {
   // add user
   run(`sudo -u postgres createuser -s $USER`);
 
-  addToPath(`/usr/lib/postgresql/${postgresVersion}/bin`);
+  bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
+}
+
+addToPath(bin);
+
+if (database) {
+  // use spawnSync for escaping
+  const ret = spawnSync(path.join(bin, "createdb"), [database], {stdio: 'inherit'});
+  if (ret.status !== 0) {
+    throw ret.error;
+  }
 }
