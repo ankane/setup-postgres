@@ -54,8 +54,10 @@ if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
 }
 
+let bin;
+
 if (isMac()) {
-  const bin = `/usr/local/opt/postgresql@${postgresVersion}/bin`;
+  bin = `/usr/local/opt/postgresql@${postgresVersion}/bin`;
   let dataDir = '/usr/local/var/postgres';
 
   if (postgresVersion != 13) {
@@ -72,8 +74,6 @@ if (isMac()) {
 
   // start
   run(`${bin}/pg_ctl -D ${dataDir} start`);
-
-  addToPath(bin);
 } else if (isWindows()) {
   if (postgresVersion != 13) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
@@ -106,5 +106,7 @@ if (isMac()) {
   // add user
   run(`sudo -u postgres createuser -s $USER`);
 
-  addToPath(`/usr/lib/postgresql/${postgresVersion}/bin`);
+  bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
 }
+
+addToPath(bin);
