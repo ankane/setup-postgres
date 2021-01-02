@@ -75,7 +75,7 @@ if (isMac()) {
   setConfig(dataDir);
 
   // start
-  run(`${bin}/pg_ctl -D ${dataDir} start`);
+  run(`${bin}/pg_ctl -w -D ${dataDir} start`);
 
   addToPath(bin);
 } else if (isWindows()) {
