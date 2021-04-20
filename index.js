@@ -87,6 +87,12 @@ if (isMac()) {
 
   bin = process.env.PGBIN;
 } else {
+  // removed in https://github.com/actions/virtual-environments/pull/3091
+  if (!fs.existsSync('/etc/apt/sources.list.d/pgdg.list')) {
+    run(`wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -`);
+    run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
+  }
+
   if (postgresVersion != 13) {
     // remove previous cluster so port 5432 is used
     run(`sudo pg_dropcluster 13 main`);
