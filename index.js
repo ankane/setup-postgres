@@ -73,7 +73,7 @@ if (isMac()) {
   setConfig(dataDir);
 
   // start
-  run(`${bin}/pg_ctl -D ${dataDir} start`);
+  run(`${bin}/pg_ctl -w -D ${dataDir} start`);
 } else if (isWindows()) {
   if (postgresVersion != 13) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
