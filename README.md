@@ -40,21 +40,15 @@ Test against multiple versions
         postgres-version: ${{ matrix.postgres-version }}
 ```
 
-## Extra Steps
+## Options
 
 Create a database
 
 ```yml
-    - run: createdb testdb
+    - uses: ankane/setup-postgres@v1
+      with:
+        database: testdb
 ```
-
-Run queries
-
-```yml
-    - run: psql -d testdb -c 'SHOW server_version'
-```
-
-## Config
 
 Set `postgresql.conf` config
 
@@ -63,6 +57,14 @@ Set `postgresql.conf` config
       with:
         config: |
           shared_preload_libraries = 'pg_stat_statements'
+```
+
+## Extra Steps
+
+Run queries
+
+```yml
+    - run: psql -d testdb -c 'SHOW server_version'
 ```
 
 ## Related Actions

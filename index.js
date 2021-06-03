@@ -1,10 +1,22 @@
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 const path = require('path');
+const spawnSync = require('child_process').spawnSync;
 
 function run(command) {
   console.log(command);
   execSync(command, {stdio: 'inherit'});
+}
+
+function runSafe() {
+  const args = Array.from(arguments);
+  console.log(args.join(' '));
+  const command = args.shift();
+  // spawn is safer and more lightweight than exec
+  const ret = spawnSync(command, args, {stdio: 'inherit'});
+  if (ret.status !== 0) {
+    throw ret.error;
+  }
 }
 
 function addToPath(newPath) {
@@ -49,10 +61,11 @@ host    all             all             ::1/128                 md5
 }
 
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
-
 if (![13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
 }
+
+const database = process.env['INPUT_DATABASE'];
 
 let bin;
 
@@ -113,6 +126,10 @@ if (isMac()) {
   run(`sudo -u postgres createuser -s $USER`);
 
   bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
+}
+
+if (database) {
+  runSafe(path.join(bin, "createdb"), database);
 }
 
 addToPath(bin);
