@@ -102,8 +102,9 @@ if (isMac()) {
 } else {
   // removed in https://github.com/actions/virtual-environments/pull/3091
   if (!fs.existsSync('/etc/apt/sources.list.d/pgdg.list')) {
+    const suffix = postgresVersion == 14 ? ` ${postgresVersion}` : "";
     run(`wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -`);
-    run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
+    run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
   }
 
   if (postgresVersion != 13) {
