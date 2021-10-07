@@ -60,7 +60,8 @@ host    all             all             ::1/128                 md5
   execSync(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
 }
 
-const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || 13);
+const defaultVersion = isMac() ? 13 : 14;
+const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || defaultVersion);
 if (![14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
 }
@@ -88,28 +89,27 @@ if (isMac()) {
   // start
   run(`${bin}/pg_ctl -w -D ${dataDir} start`);
 } else if (isWindows()) {
-  if (postgresVersion != 13) {
+  if (postgresVersion != 14) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
 
   setConfig(process.env.PGDATA);
 
   // start
-  run(`sc config postgresql-x64-13 start=auto`);
-  run(`net start postgresql-x64-13`);
+  run(`sc config postgresql-x64-14 start=auto`);
+  run(`net start postgresql-x64-14`);
 
   bin = process.env.PGBIN;
 } else {
   // removed in https://github.com/actions/virtual-environments/pull/3091
   if (!fs.existsSync('/etc/apt/sources.list.d/pgdg.list')) {
-    const suffix = postgresVersion == 14 ? ` ${postgresVersion}` : "";
     run(`wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -`);
-    run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
+    run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
   }
 
-  if (postgresVersion != 13) {
+  if (postgresVersion != 14) {
     // remove previous cluster so port 5432 is used
-    run(`sudo pg_dropcluster 13 main`);
+    run(`sudo pg_dropcluster 14 main`);
 
     // install new version
     run(`sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/pgdg.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"`);

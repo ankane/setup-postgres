@@ -11,9 +11,9 @@ jobs:
         postgres-version: [13, 12, 11, 10, 9.6]
         include:
         - os: windows-2019
-          postgres-version: 13
+          postgres-version: 14
         - os: windows-2016
-          postgres-version: 13
+          postgres-version: 14
         - os: ubuntu-20.04
           postgres-version: 14
     steps:
