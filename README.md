@@ -23,17 +23,17 @@ Specify a version (defaults to the latest)
 ```yml
     - uses: ankane/setup-postgres@v1
       with:
-        postgres-version: 13
+        postgres-version: 14
 ```
 
-Currently supports `13`, `12`, `11`, `10`, and `9.6`. Only the latest version is supported on Windows.
+Currently supports `14`, `13`, `12`, `11`, `10`, and `9.6`. Only the latest version is supported on Windows.
 
 Test against multiple versions
 
 ```yml
     strategy:
       matrix:
-        postgres-version: [13, 12, 11, 10, 9.6]
+        postgres-version: [14, 13, 12, 11, 10, 9.6]
     steps:
     - uses: ankane/setup-postgres@v1
       with:
