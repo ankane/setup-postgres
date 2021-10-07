@@ -18,7 +18,7 @@ Add it as a step to your workflow
 
 ## Versions
 
-Specify a version (defaults to the latest)
+Specify a version
 
 ```yml
     - uses: ankane/setup-postgres@v1
@@ -26,7 +26,13 @@ Specify a version (defaults to the latest)
         postgres-version: 14
 ```
 
-Currently supports `14`, `13`, `12`, `11`, `10`, and `9.6`. Only the latest version is supported on Windows.
+Currently supports
+
+Version | `14` | `13` | `12` | `11` | `10` | `9.6`
+--- | --- | --- | --- | --- | --- | ---
+Ubuntu | default | ✓ | ✓ | ✓ | ✓ | ✓
+Mac | | default | ✓ | ✓ | ✓ | ✓
+Windows | default | | | | | |
 
 Test against multiple versions
 
