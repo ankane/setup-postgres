@@ -31,7 +31,7 @@ Currently supports
 Version | `14` | `13` | `12` | `11` | `10` | `9.6`
 --- | --- | --- | --- | --- | --- | ---
 Ubuntu | default | ✓ | ✓ | ✓ | ✓ | ✓
-Mac | | default | ✓ | ✓ | ✓ | ✓
+Mac | default | ✓ | ✓ | ✓ | ✓ | ✓
 Windows | default | | | | | |
 
 Test against multiple versions
