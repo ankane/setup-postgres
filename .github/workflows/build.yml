@@ -16,6 +16,8 @@ jobs:
           postgres-version: 14
         - os: ubuntu-20.04
           postgres-version: 14
+        - os: macos-11
+          postgres-version: 14
     steps:
     - uses: actions/checkout@v2
     - uses: ./.

@@ -60,7 +60,7 @@ host    all             all             ::1/128                 md5
   execSync(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
 }
 
-const defaultVersion = isMac() ? 13 : 14;
+const defaultVersion = 14;
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || defaultVersion);
 if (![14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
@@ -74,7 +74,7 @@ if (isMac()) {
   bin = `/usr/local/opt/postgresql@${postgresVersion}/bin`;
   let dataDir = '/usr/local/var/postgres';
 
-  if (postgresVersion != 13) {
+  if (postgresVersion != 14) {
     // remove previous version
     run(`brew unlink postgresql`);
 
