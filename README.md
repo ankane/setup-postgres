@@ -18,7 +18,7 @@ Add it as a step to your workflow
 
 ## Versions
 
-Specify a version (defaults to the latest)
+Specify a version
 
 ```yml
     - uses: ankane/setup-postgres@v1
