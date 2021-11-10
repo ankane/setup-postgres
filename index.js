@@ -103,7 +103,7 @@ if (isMac()) {
 } else {
   // removed in https://github.com/actions/virtual-environments/pull/3091
   if (!fs.existsSync('/etc/apt/sources.list.d/pgdg.list')) {
-    run(`wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -`);
+    run(`wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - 2> /dev/null`);
     run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
   }
 
