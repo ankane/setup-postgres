@@ -31,7 +31,7 @@ Currently supports
 Version | `14` | `13` | `12` | `11` | `10` | `9.6`
 --- | --- | --- | --- | --- | --- | ---
 Ubuntu | default | ✓ | ✓ | ✓ | ✓ | ✓
-Mac | default | ✓ | ✓ | ✓ | ✓ | ✓
+Mac | default | ✓ | ✓ | ✓ | ✓ |
 Windows | default | | | | | |
 
 Test against multiple versions
@@ -39,7 +39,7 @@ Test against multiple versions
 ```yml
     strategy:
       matrix:
-        postgres-version: [14, 13, 12, 11, 10, 9.6]
+        postgres-version: [14, 13, 12, 11, 10]
     steps:
     - uses: ankane/setup-postgres@v1
       with:
