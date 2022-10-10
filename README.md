@@ -2,7 +2,7 @@
 
 The missing action for Postgres :tada:
 
-- Faster and simpler than containers
+- Faster (with the default version) and simpler than containers
 - Works on Linux, Mac, and Windows
 - Supports different versions
 
