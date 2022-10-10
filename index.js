@@ -72,16 +72,14 @@ let bin;
 
 if (isMac()) {
   bin = `/usr/local/opt/postgresql@${postgresVersion}/bin`;
-  let dataDir = '/usr/local/var/postgres';
+  let dataDir = `/usr/local/var/postgresql@${postgresVersion}`;
 
   if (postgresVersion != 14) {
     // remove previous version
-    run(`brew unlink postgresql`);
+    run(`brew unlink postgresql@14`);
 
     // install new version
     run(`brew install postgresql@${postgresVersion}`);
-    dataDir += `@${postgresVersion}`;
-    run(`${bin}/initdb --locale=C -E UTF-8 ${dataDir}`);
   }
 
   setConfig(dataDir);
