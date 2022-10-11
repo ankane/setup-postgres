@@ -26,7 +26,7 @@ jobs:
         - os: windows-2019
           postgres-version: 14
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.
       with:
         postgres-version: ${{ matrix.postgres-version }}
