@@ -29,7 +29,7 @@ Specify a version
 Currently supports
 
 Version | `15` | `14` | `13` | `12` | `11` | `10` | `9.6`
---- | --- | --- | --- | --- | --- | ---
+--- | --- | --- | --- | --- | --- | --- | ---
 Ubuntu | ✓ | default | ✓ | ✓ | ✓ | ✓ | ✓
 Mac | | default | ✓ | ✓ | ✓ | ✓ |
 Windows | | default | | | | | |
