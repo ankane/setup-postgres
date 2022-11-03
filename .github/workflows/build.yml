@@ -39,5 +39,6 @@ jobs:
     - run: psql -d testdb -h localhost -c 'SHOW server_version'
     - run: psql --version
     - run: pg_config
-    - if: ${{ !startsWith(matrix.os, 'windows') }}
+    # Homebrew has invalid path for Postgres 12 and 13
+    - if: ${{ startsWith(matrix.os, 'ubuntu') }}
       run: test -f $(pg_config --includedir-server)/postgres.h
