@@ -33,12 +33,12 @@ jobs:
         config: |
           shared_preload_libraries = 'pg_stat_statements'
         database: testdb
-        dev-files: true
+        dev-files: ${{ matrix.postgres-version == 11 }}
     - run: createdb testdb2
     - run: psql -d testdb -c 'SHOW server_version'
     - run: psql -d testdb -h localhost -c 'SHOW server_version'
     - run: psql --version
     - run: pg_config
     # Homebrew has invalid path for Postgres 12 and 13
-    - if: ${{ startsWith(matrix.os, 'ubuntu') }}
+    - if: ${{ matrix.postgres-version == 11 }}
       run: test -f $(pg_config --includedir-server)/postgres.h
