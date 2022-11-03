@@ -65,6 +65,14 @@ Set `postgresql.conf` config
           shared_preload_libraries = 'pg_stat_statements'
 ```
 
+Install development files (for building extensions)
+
+```yml
+    - uses: ankane/setup-postgres@v1
+      with:
+        dev-files: true
+```
+
 ## Extra Steps
 
 Run queries

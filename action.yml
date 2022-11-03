@@ -6,6 +6,8 @@ inputs:
     description: Set config
   database:
     description: Database to create
+  dev-files:
+    description: Install development files
 runs:
   using: node16
   main: index.js

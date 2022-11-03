@@ -115,6 +115,13 @@ if (isMac()) {
     run(`sudo apt-get install postgresql-${postgresVersion}`);
   }
 
+  const devFiles = process.env['INPUT_DEV-FILES'];
+  // maybe support other truthy values in future
+  if (devFiles == 'true') {
+    run(`sudo apt-get update`);
+    run(`sudo apt-get install postgresql-server-dev-${postgresVersion}`);
+  }
+
   const dataDir = `/etc/postgresql/${postgresVersion}/main`;
   setConfig(dataDir);
   updateHba(dataDir);
