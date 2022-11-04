@@ -78,6 +78,11 @@ if (isMac()) {
     // remove previous version
     run(`brew unlink postgresql@14`);
 
+    // update Homebrew if needed
+    if (process.env['ImageOS'] == 'macos1015' && postgresVersion == 15) {
+      run(`brew update`);
+    }
+
     // install new version
     run(`brew install postgresql@${postgresVersion}`);
   }
