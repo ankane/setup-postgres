@@ -13,7 +13,7 @@ The missing action for Postgres :tada:
 Add it as a step to your workflow
 
 ```yml
-    - uses: ankane/setup-postgres@v1
+      - uses: ankane/setup-postgres@v1
 ```
 
 ## Versions
@@ -21,9 +21,9 @@ Add it as a step to your workflow
 Specify a version
 
 ```yml
-    - uses: ankane/setup-postgres@v1
-      with:
-        postgres-version: 14
+      - uses: ankane/setup-postgres@v1
+        with:
+          postgres-version: 14
 ```
 
 Currently supports
@@ -41,9 +41,9 @@ Test against multiple versions
       matrix:
         postgres-version: [14, 13, 12, 11, 10]
     steps:
-    - uses: ankane/setup-postgres@v1
-      with:
-        postgres-version: ${{ matrix.postgres-version }}
+      - uses: ankane/setup-postgres@v1
+        with:
+          postgres-version: ${{ matrix.postgres-version }}
 ```
 
 ## Options
@@ -51,26 +51,26 @@ Test against multiple versions
 Create a database
 
 ```yml
-    - uses: ankane/setup-postgres@v1
-      with:
-        database: testdb
+      - uses: ankane/setup-postgres@v1
+        with:
+          database: testdb
 ```
 
 Set `postgresql.conf` config
 
 ```yml
-    - uses: ankane/setup-postgres@v1
-      with:
-        config: |
-          shared_preload_libraries = 'pg_stat_statements'
+      - uses: ankane/setup-postgres@v1
+        with:
+          config: |
+            shared_preload_libraries = 'pg_stat_statements'
 ```
 
 Install development files (for building extensions)
 
 ```yml
-    - uses: ankane/setup-postgres@v1
-      with:
-        dev-files: true
+      - uses: ankane/setup-postgres@v1
+        with:
+          dev-files: true
 ```
 
 ## Extra Steps
@@ -78,7 +78,7 @@ Install development files (for building extensions)
 Run queries
 
 ```yml
-    - run: psql -d testdb -c 'SHOW server_version'
+      - run: psql -d testdb -c 'SHOW server_version'
 ```
 
 ## Related Actions
