@@ -62,7 +62,7 @@ host    all             all             ::1/128                 md5
 
 const defaultVersion = 14;
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || defaultVersion);
-if (![15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
+if (![16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
 }
 
