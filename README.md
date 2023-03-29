@@ -39,7 +39,7 @@ Test against multiple versions
 ```yml
     strategy:
       matrix:
-        postgres-version: [14, 13, 12, 11, 10]
+        postgres-version: [15, 14, 13, 12, 11]
     steps:
       - uses: ankane/setup-postgres@v1
         with:
