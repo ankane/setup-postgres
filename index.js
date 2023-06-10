@@ -62,7 +62,7 @@ host    all             all             ::1/128                 md5
 
 const defaultVersion = 14;
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || defaultVersion);
-if (![15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
+if (![16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
 }
 
@@ -110,8 +110,9 @@ if (isMac()) {
     // development snapshots require this and -snapshot after pgdg
     // https://wiki.postgresql.org/wiki/Apt/FAQ
     const suffix = postgresVersion == 16 ? ` ${postgresVersion}` : "";
+    const snapshot = postgresVersion == 16 ? `-snapshot` : "";
     run(`curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null`)
-    run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
+    run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg${snapshot} main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
   }
 
   if (postgresVersion != 14) {
