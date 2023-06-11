@@ -74,9 +74,11 @@ if (isMac()) {
   bin = `/usr/local/opt/postgresql@${postgresVersion}/bin`;
   let dataDir = `/usr/local/var/postgresql@${postgresVersion}`;
 
-  if (postgresVersion != 14) {
-    // remove previous version
-    run(`brew unlink postgresql@14`);
+  if (postgresVersion != 14 || process.env['ImageOS'] == 'macos13') {
+    if (process.env['ImageOS'] != 'macos13') {
+      // remove previous version
+      run(`brew unlink postgresql@14`);
+    }
 
     // update Homebrew if needed
     if (process.env['ImageOS'] == 'macos1015' && postgresVersion == 15) {
