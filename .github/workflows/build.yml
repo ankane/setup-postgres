@@ -10,6 +10,10 @@ jobs:
         postgres-version: [15, 14, 13, 12, 11]
         include:
           - os: ubuntu-22.04
+            postgres-version: 16
+          - os: ubuntu-20.04
+            postgres-version: 16
+          - os: ubuntu-22.04
             postgres-version: 10
           - os: ubuntu-20.04
             postgres-version: 10

@@ -23,23 +23,23 @@ Specify a version
 ```yml
       - uses: ankane/setup-postgres@v1
         with:
-          postgres-version: 14
+          postgres-version: 16
 ```
 
 Currently supports
 
-Version | `15` | `14` | `13` | `12` | `11` | `10` | `9.6`
---- | --- | --- | --- | --- | --- | --- | ---
-Ubuntu | ✓ | default | ✓ | ✓ | ✓ | ✓ | ✓
-Mac | ✓ | default | ✓ | ✓ | ✓ | |
-Windows | | default | | | | | |
+Version | `16` | `15` | `14` | `13` | `12` | `11` | `10` | `9.6`
+--- | --- | --- | --- | --- | --- | --- | --- | ---
+Ubuntu | ✓ | ✓ | default | ✓ | ✓ | ✓ | ✓ | ✓
+Mac | | ✓ | default | ✓ | ✓ | ✓ | |
+Windows | | | default | | | | | |
 
 Test against multiple versions
 
 ```yml
     strategy:
       matrix:
-        postgres-version: [15, 14, 13, 12, 11]
+        postgres-version: [16, 15, 14, 13, 12]
     steps:
       - uses: ankane/setup-postgres@v1
         with:
