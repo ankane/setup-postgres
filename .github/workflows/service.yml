@@ -16,4 +16,4 @@ jobs:
         ports:
           - 5432:5432
     steps:
-    - run: psql -h localhost -U postgres -d postgres -c 'SHOW server_version'
+      - run: psql -h localhost -U postgres -d postgres -c 'SHOW server_version'
