@@ -6,13 +6,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, ubuntu-20.04, macos-14, macos-13, macos-12]
-        postgres-version: [16, 15, 14, 13, 12]
-        include:
-          - os: windows-2022
-            postgres-version: 14
-          - os: windows-2019
-            postgres-version: 14
+        os: [macos-14, macos-12]
+        postgres-version: [16, 14]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.

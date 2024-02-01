@@ -76,15 +76,10 @@ if (isMac()) {
   bin = `${prefix}/opt/postgresql@${postgresVersion}/bin`;
   let dataDir = `${prefix}/var/postgresql@${postgresVersion}`;
 
-  if (postgresVersion != 14 || process.env['ImageOS'] == 'macos13' || process.env['ImageOS'] == 'macos14') {
-    if (process.env['ImageOS'] != 'macos13' && process.env['ImageOS'] != 'macos14') {
+  if (!fs.existsSync(bin)) {
+    if (fs.existsSync(`${prefix}/opt/postgresql@14`)) {
       // remove previous version
       run(`brew unlink postgresql@14`);
-    }
-
-    // update Homebrew if needed
-    if (process.env['ImageOS'] == 'macos1015' && postgresVersion == 15) {
-      run(`brew update`);
     }
 
     // install new version
