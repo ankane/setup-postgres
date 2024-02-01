@@ -71,11 +71,13 @@ const database = process.env['INPUT_DATABASE'];
 let bin;
 
 if (isMac()) {
-  bin = `/usr/local/opt/postgresql@${postgresVersion}/bin`;
-  let dataDir = `/usr/local/var/postgresql@${postgresVersion}`;
+  const prefix = process.env['ImageOS'] == 'macos14' ? '/opt/homebrew' : '/usr/local';
 
-  if (postgresVersion != 14 || process.env['ImageOS'] == 'macos13') {
-    if (process.env['ImageOS'] != 'macos13') {
+  bin = `${prefix}/opt/postgresql@${postgresVersion}/bin`;
+  let dataDir = `${prefix}/var/postgresql@${postgresVersion}`;
+
+  if (postgresVersion != 14 || process.env['ImageOS'] == 'macos13' || process.env['ImageOS'] == 'macos14') {
+    if (process.env['ImageOS'] != 'macos13' && process.env['ImageOS'] != 'macos14') {
       // remove previous version
       run(`brew unlink postgresql@14`);
     }
