@@ -7,16 +7,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04, ubuntu-20.04, macos-14, macos-13, macos-12]
-        postgres-version: [16, 15, 14, 13, 12, 11]
+        postgres-version: [16, 15, 14, 13, 12]
         include:
-          - os: ubuntu-22.04
-            postgres-version: 10
-          - os: ubuntu-20.04
-            postgres-version: 10
-          - os: ubuntu-22.04
-            postgres-version: 9.6
-          - os: ubuntu-20.04
-            postgres-version: 9.6
           - os: windows-2022
             postgres-version: 14
           - os: windows-2019
@@ -29,12 +21,10 @@ jobs:
           config: |
             shared_preload_libraries = 'pg_stat_statements'
           database: testdb
-          dev-files: ${{ matrix.postgres-version == 11 }}
+          dev-files: ${{ matrix.postgres-version == 12 }}
       - run: createdb testdb2
       - run: psql -d testdb -c 'SHOW server_version'
       - run: psql -d testdb -h localhost -c 'SHOW server_version'
       - run: psql --version
       - run: pg_config
-      # Homebrew has invalid path for Postgres 12 and 13
-      - if: ${{ matrix.postgres-version == 11 }}
-        run: test -f $(pg_config --includedir-server)/postgres.h
+      - run: test -f $(pg_config --includedir-server)/postgres.h

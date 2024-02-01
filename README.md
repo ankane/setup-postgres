@@ -28,11 +28,11 @@ Specify a version
 
 Currently supports
 
-Version | `16` | `15` | `14` | `13` | `12` | `11` | `10` | `9.6`
---- | --- | --- | --- | --- | --- | --- | --- | ---
-Ubuntu | ✓ | ✓ | default | ✓ | ✓ | ✓ | ✓ | ✓
-Mac | ✓ | ✓ | default | ✓ | ✓ | ✓ | |
-Windows | | | default | | | | | |
+Version | `16` | `15` | `14` | `13` | `12`
+--- | --- | --- | --- | --- | ---
+Ubuntu | ✓ | ✓ | default | ✓ | ✓
+Mac | ✓ | ✓ | default | ✓ | ✓
+Windows | | | default | | |
 
 Test against multiple versions
 
