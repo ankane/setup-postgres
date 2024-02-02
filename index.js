@@ -71,7 +71,7 @@ const database = process.env['INPUT_DATABASE'];
 let bin;
 
 if (isMac()) {
-  const prefix = process.env['ImageOS'] == 'macos14' ? '/opt/homebrew' : '/usr/local';
+  const prefix = process.arch == 'arm64' ? '/opt/homebrew' : '/usr/local';
 
   bin = `${prefix}/opt/postgresql@${postgresVersion}/bin`;
   let dataDir = `${prefix}/var/postgresql@${postgresVersion}`;
