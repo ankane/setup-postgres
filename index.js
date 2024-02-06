@@ -138,7 +138,7 @@ if (isMac()) {
   run(`sudo systemctl start postgresql@${postgresVersion}-main`);
 
   // add user
-  run(`sudo -u postgres createuser -s $USER`);
+  run(`sudo -iu postgres createuser -s $USER`);
 
   bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
 }
