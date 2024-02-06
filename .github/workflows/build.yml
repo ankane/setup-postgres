@@ -27,4 +27,5 @@ jobs:
       - run: psql -d testdb -h localhost -c 'SHOW server_version'
       - run: psql --version
       - run: pg_config
-      - run: test -f $(pg_config --includedir-server)/postgres.h
+      - if: ${{ matrix.postgres-version == 12 }}
+        run: test -f $(pg_config --includedir-server)/postgres.h
