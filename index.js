@@ -66,7 +66,7 @@ if (![17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
 }
 
-const database = process.env['INPUT_DATABASE'];
+const databases = process.env['INPUT_DATABASE'];
 
 let bin;
 
@@ -143,8 +143,18 @@ if (isMac()) {
   bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
 }
 
-if (database) {
-  runSafe(path.join(bin, "createdb"), database);
+if (databases) {
+  // Allow for database list, eg.
+  // with:
+  //   database: |
+  //     example_1
+  //     example_2
+  for (let db of databases.split(/[ \n]/)) {
+    db = db.trim();
+    if (db) {
+      runSafe(path.join(bin, "createdb"), db);
+    }
+  }
 }
 
 addToPath(bin);
