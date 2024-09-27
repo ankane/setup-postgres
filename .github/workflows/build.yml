@@ -6,7 +6,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-14, macos-13, macos-12]
+        os: [macos-14, macos-13]
         postgres-version: [17]
     steps:
       - uses: actions/checkout@v4

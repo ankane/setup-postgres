@@ -5,7 +5,9 @@ const spawnSync = require('child_process').spawnSync;
 
 function run(command) {
   console.log(command);
-  execSync(command, {stdio: 'inherit'});
+  let env = Object.assign({}, process.env);
+  env.HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK = '1';
+  execSync(command, {stdio: 'inherit', env: env});
 }
 
 function runSafe() {
