@@ -60,6 +60,12 @@ host    all             all             ::1/128                 md5
   execSync(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
 }
 
+function formulaPresent(formula) {
+  const tapPrefix = process.arch == 'arm64' ? '/opt/homebrew' : '/usr/local/Homebrew';
+  const tap = `${tapPrefix}/Library/Taps/homebrew/homebrew-core`;
+  return fs.existsSync(`${tap}/Formula/${formula[0]}/${formula}.rb`) || fs.existsSync(`${tap}/Aliases/${formula}`);
+}
+
 const defaultVersion = process.env['ImageOS'] == 'ubuntu24' ? 16 : 14;
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || defaultVersion);
 if (![18, 17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
@@ -80,6 +86,10 @@ if (isMac()) {
     if (fs.existsSync(`${prefix}/opt/postgresql@14`)) {
       // remove previous version
       run(`brew unlink postgresql@14`);
+    }
+
+    if (!formulaPresent(`postgresql@${postgresVersion}`)) {
+      run(`brew update`);
     }
 
     // install new version
