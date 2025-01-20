@@ -33,6 +33,10 @@ function isWindows() {
   return process.platform == 'win32';
 }
 
+function isArm() {
+  return process.arch == 'arm64';
+}
+
 // TODO read each line and replace existing value if needed
 function setConfig(dir) {
   const config = process.env['INPUT_CONFIG'];
@@ -89,7 +93,7 @@ const database = process.env['INPUT_DATABASE'];
 let bin;
 
 if (isMac()) {
-  const prefix = process.arch == 'arm64' ? '/opt/homebrew' : '/usr/local';
+  const prefix = isArm() ? '/opt/homebrew' : '/usr/local';
 
   bin = `${prefix}/opt/postgresql@${postgresVersion}/bin`;
   let dataDir = `${prefix}/var/postgresql@${postgresVersion}`;
@@ -137,9 +141,11 @@ if (isMac()) {
     run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg${snapshot} main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
   }
 
-  if (postgresVersion != defaultVersion) {
+  if (postgresVersion != defaultVersion || isArm()) {
     // remove previous cluster so port 5432 is used
-    run(`sudo pg_dropcluster ${defaultVersion} main`);
+    if (!isArm()) {
+      run(`sudo pg_dropcluster ${defaultVersion} main`);
+    }
 
     // install new version
     run(`sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/pgdg.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"`);
