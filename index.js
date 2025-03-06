@@ -145,6 +145,10 @@ if (isMac()) {
     // remove previous cluster so port 5432 is used
     if (!isArm()) {
       run(`sudo pg_dropcluster ${defaultVersion} main`);
+
+      if (postgresVersion < defaultVersion) {
+        run(`sudo apt-get remove postgresql-${defaultVersion}`);
+      }
     }
 
     // install new version
