@@ -168,7 +168,8 @@ if (isMac()) {
   updateHba(dataDir);
 
   // start
-  run(`sudo systemctl start postgresql@${postgresVersion}-main`);
+  const startCmd = isArm() ? `restart` : `start`;
+  run(`sudo systemctl ${startCmd} postgresql@${postgresVersion}-main`);
 
   // add user
   run(`sudo -iu postgres createuser -s $USER`);
