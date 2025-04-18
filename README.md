@@ -30,11 +30,16 @@ Currently supports
 
 Version | `17` | `16` | `15` | `14` | `13`
 --- | --- | --- | --- | --- | ---
-Ubuntu 24.04 | ✓ | default | ✓ | ✓ | ✓
-Ubuntu (rest) | ✓ | ✓ | ✓ | default | ✓
-Mac | default | ✓ | ✓ | ✓ | ✓
-Windows 2025 | default | | | | |
-Windows (rest) | | | | default | |
+`ubuntu-24.04` | ✓ | default | ✓ | ✓ | ✓
+`ubuntu-24.04-arm` | ✓ | default | ✓ | ✓ | ✓
+`ubuntu-22.04` | ✓ | ✓ | ✓ | default | ✓
+`ubuntu-22.04-arm` | ✓ | ✓ | ✓ | default | ✓
+`macos-15` | default | ✓ | ✓ | ✓ | ✓
+`macos-14` | default | ✓ | ✓ | ✓ | ✓
+`macos-13` | default | ✓ | ✓ | ✓ | ✓
+`windows-2025` | default | | | | |
+`windows-2022` | | | | default | |
+`windows-2019` | | | | default | |
 
 Test against multiple versions
 
