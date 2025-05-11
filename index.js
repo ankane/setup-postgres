@@ -136,7 +136,7 @@ if (isMac()) {
     // development snapshots require this and -snapshot after pgdg
     // https://wiki.postgresql.org/wiki/Apt/FAQ
     const suffix = postgresVersion >= 18 ? ` ${postgresVersion}` : "";
-    const snapshot = postgresVersion >= 18 ? `-snapshot` : "";
+    const snapshot = postgresVersion >= 19 ? `-snapshot` : "";
     run(`curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null`)
     run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg${snapshot} main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
   }
