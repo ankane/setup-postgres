@@ -8,6 +8,8 @@ inputs:
     description: Database to create
   dev-files:
     description: Install development files
+  postgis:
+    description: Install PostGIS extension (Linux Ubuntu only)
 runs:
   using: node20
   main: index.js

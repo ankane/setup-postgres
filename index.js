@@ -141,9 +141,11 @@ if (isMac()) {
     run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg${snapshot} main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
   }
 
-  if (postgresVersion != defaultVersion || isArm()) {
+  const postgis = process.env['INPUT_POSTGIS'];
+  
+  if (postgresVersion != defaultVersion || isArm() || postgis == 'true') {
     // remove previous cluster so port 5432 is used
-    if (!isArm()) {
+    if (!isArm() && postgresVersion != defaultVersion) {
       run(`sudo pg_dropcluster ${defaultVersion} main`);
 
       if (postgresVersion < defaultVersion) {
@@ -161,6 +163,12 @@ if (isMac()) {
   if (devFiles == 'true') {
     run(`sudo apt-get update`);
     run(`sudo apt-get install postgresql-server-dev-${postgresVersion}`);
+  }
+
+  // maybe support other truthy values in future
+  if (postgis == 'true') {
+    run(`sudo apt-get update`);
+    run(`sudo apt-get install postgresql-${postgresVersion}-postgis-3`);
   }
 
   const dataDir = `/etc/postgresql/${postgresVersion}/main`;

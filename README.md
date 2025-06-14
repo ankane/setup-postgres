@@ -80,6 +80,41 @@ Install development files (for building extensions)
           dev-files: true
 ```
 
+Install PostGIS extension (Linux Ubuntu only)
+
+```yml
+      - uses: ankane/setup-postgres@v1
+        with:
+          postgis: true
+```
+
+To enable the PostGIS extension in your database:
+
+```yml
+      - uses: ankane/setup-postgres@v1
+        with:
+          database: testdb
+          postgis: true
+      - run: psql -d testdb -c 'CREATE EXTENSION postgis;'
+```
+
+Example with custom configuration (note: `postgis` is NOT in shared_preload_libraries):
+
+```yml
+      - uses: ankane/setup-postgres@v1
+        with:
+          database: testdb
+          postgis: true
+          config: |
+            shared_preload_libraries = 'pg_stat_statements'
+            max_connections = 200
+      - run: psql -d testdb -c 'CREATE EXTENSION postgis;'
+```
+
+**Note:** PostGIS is only supported on Linux Ubuntu. The action automatically installs the appropriate PostGIS 3 version based on your PostgreSQL version.
+
+**Important:** Do not include `postgis` in `shared_preload_libraries` configuration. PostGIS is loaded as a database extension, not as a shared preload library.
+
 ## Extra Steps
 
 Run queries
