@@ -84,7 +84,7 @@ function getDefaultVersion() {
 
 const defaultVersion = getDefaultVersion();
 const postgresVersion = parseFloat(process.env['INPUT_POSTGRES-VERSION'] || defaultVersion);
-if (![18, 17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
+if (![19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
   throw `Postgres version not supported: ${postgresVersion}`;
 }
 
