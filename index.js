@@ -17,11 +17,6 @@ function run() {
   }
 }
 
-function runUnsafe(command) {
-  console.log(command);
-  execSync(command, {stdio: 'inherit'});
-}
-
 function addToPath(newPath) {
   fs.appendFileSync(process.env.GITHUB_PATH, `${newPath}\n`);
 }
@@ -147,8 +142,11 @@ if (isMac()) {
     // https://wiki.postgresql.org/wiki/Apt/FAQ
     const suffix = postgresVersion >= 18 ? ` ${postgresVersion}` : '';
     const snapshot = postgresVersion >= 19 ? `-snapshot` : '';
-    runUnsafe(`curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null`)
-    runUnsafe(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg${snapshot} main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
+    run(`sudo`, `install`, `-d`, `/usr/share/postgresql-common/pgdg`);
+    run(`sudo`, `curl`, `-s`, `-o`, `/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc`, `--fail`, `https://www.postgresql.org/media/keys/ACCC4CF8.asc`);
+    const codename =  spawnSync(`lsb_release`, [`-cs`], {encoding: 'utf-8'}).stdout.trim();
+    const pgdgList = `deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt ${codename}-pgdg${snapshot} main${suffix}\n`;
+    spawnSync(`sudo`, [`tee`, `/etc/apt/sources.list.d/pgdg.list`], {input: pgdgList});
   }
 
   if (postgresVersion != defaultVersion || isArm()) {
