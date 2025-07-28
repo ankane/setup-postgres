@@ -1,4 +1,3 @@
-const execSync = require('child_process').execSync;
 const fs = require('fs');
 const path = require('path');
 const spawnSync = require('child_process').spawnSync;
