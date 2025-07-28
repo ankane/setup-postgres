@@ -58,7 +58,12 @@ host    all             all             127.0.0.1/32            md5
 host    all             all             ::1/128                 md5
 `;
   const file = path.join(dir, 'pg_hba.conf');
-  spawnSync(`sudo`, [`tee`, file], {input: contents});
+
+  if (isMac() || isWindows()) {
+    fs.writeFileSync(file, contents);
+  } else {
+    spawnSync(`sudo`, [`tee`, file], {input: contents});
+  }
 }
 
 function formulaPresent(formula) {
@@ -84,11 +89,12 @@ if (![19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
 }
 
 const database = process.env['INPUT_DATABASE'];
-const user = (isMac() || isWindows()) ? null : process.env['USER'];
-if (user && user != 'runner') {
+const user = process.env['USER'];
+if (user && user != 'runner' && user != 'runneradmin') {
   // TODO fix
   throw `Unsupported user: ${user}`;
 }
+const userExists = user == process.env['USER'] && (isMac() || isWindows());
 
 let bin;
 let cmdPrefix = [];
@@ -115,6 +121,7 @@ if (isMac()) {
   // update config
   const dataDir = `${prefix}/var/postgresql@${postgresVersion}`;
   setConfig(dataDir);
+  updateHba(dataDir, user);
 
   // start
   run(`${bin}/pg_ctl`, `-w`, `-D`, dataDir, `start`);
@@ -127,6 +134,7 @@ if (isMac()) {
   // update config
   const dataDir = process.env.PGDATA;
   setConfig(dataDir);
+  updateHba(dataDir, user);
 
   // start
   run(`sc`, `config`, `postgresql-x64-${supportedVersion}`, `start=auto`);
@@ -183,7 +191,7 @@ if (isMac()) {
   cmdPrefix = [`sudo`, `-iu`, `postgres`];
 }
 
-if (user) {
+if (!userExists) {
   run(...cmdPrefix, path.join(bin, 'createuser'), `-s`, user);
 }
 
