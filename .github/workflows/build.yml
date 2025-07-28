@@ -13,8 +13,6 @@ jobs:
             postgres-version: 17
           - os: windows-2022
             postgres-version: 14
-          - os: windows-2019
-            postgres-version: 14
     steps:
       - uses: actions/checkout@v4
       - uses: ./.
