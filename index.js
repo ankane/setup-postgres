@@ -195,7 +195,7 @@ if (!userExists) {
 }
 
 if (database) {
-  run(path.join(bin, 'createdb'), database);
+  run(path.join(bin, 'createdb'), '-U', user, database);
 }
 
 addToPath(bin);
