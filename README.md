@@ -39,7 +39,6 @@ Version | `17` | `16` | `15` | `14` | `13`
 `macos-13` | default | ✓ | ✓ | ✓ | ✓
 `windows-2025` | default | | | | |
 `windows-2022` | | | | default | |
-`windows-2019` | | | | default | |
 
 Test against multiple versions
 
