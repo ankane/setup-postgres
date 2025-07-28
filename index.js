@@ -52,17 +52,19 @@ function setConfig(dir) {
   }
 }
 
-function updateHba(dir) {
+function updateHba(dir, user) {
   const contents = `
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
 local   all             postgres                                peer
+local   all             ${user}                                 trust
 local   all             all                                     peer
-host    all             $USER           127.0.0.1/32            trust
-host    all             $USER           ::1/128                 trust
+host    all             ${user}         127.0.0.1/32            trust
+host    all             ${user}         ::1/128                 trust
 host    all             all             127.0.0.1/32            md5
 host    all             all             ::1/128                 md5
-`
-  execSync(`echo "${contents}" | sudo tee ${dir}/pg_hba.conf`);
+`;
+  const file = path.join(dir, 'pg_hba.conf');
+  spawnSync(`sudo`, [`tee`, file], {input: contents});
 }
 
 function formulaPresent(formula) {
@@ -89,6 +91,10 @@ if (![19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
 
 const database = process.env['INPUT_DATABASE'];
 const user = (isMac() || isWindows()) ? null : process.env['USER'];
+if (user && user != 'runner') {
+  // TODO fix
+  throw `Unsupported user: ${user}`;
+}
 
 let bin;
 let cmdPrefix = [];
@@ -166,7 +172,7 @@ if (isMac()) {
 
   const dataDir = `/etc/postgresql/${postgresVersion}/main`;
   setConfig(dataDir);
-  updateHba(dataDir);
+  updateHba(dataDir, user);
 
   // start
   const startCmd = isArm() ? `restart` : `start`;
