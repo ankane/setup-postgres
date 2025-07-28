@@ -3,14 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const spawnSync = require('child_process').spawnSync;
 
-function run(command) {
-  console.log(command);
-  let env = Object.assign({}, process.env);
-  env.HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK = '1';
-  execSync(command, {stdio: 'inherit', env: env});
-}
-
-function runSafe() {
+function run() {
   const args = Array.from(arguments);
   console.log(args.join(' '));
   const command = args.shift();
@@ -19,6 +12,13 @@ function runSafe() {
   if (ret.status !== 0) {
     throw ret.error;
   }
+}
+
+function runUnsafe(command) {
+  console.log(command);
+  let env = Object.assign({}, process.env);
+  env.HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK = '1';
+  execSync(command, {stdio: 'inherit', env: env});
 }
 
 function addToPath(newPath) {
@@ -101,21 +101,21 @@ if (isMac()) {
   if (!fs.existsSync(bin)) {
     if (fs.existsSync(`${prefix}/opt/postgresql@14`)) {
       // remove previous version
-      run(`brew unlink postgresql@14`);
+      run(`brew`, `unlink`, `postgresql@14`);
     }
 
     if (!formulaPresent(`postgresql@${postgresVersion}`)) {
-      run(`brew update`);
+      run(`brew`, `update`);
     }
 
     // install new version
-    run(`brew install postgresql@${postgresVersion}`);
+    run(`brew`, `install`, `postgresql@${postgresVersion}`);
   }
 
   setConfig(dataDir);
 
   // start
-  run(`${bin}/pg_ctl -w -D ${dataDir} start`);
+  run(`${bin}/pg_ctl`, `-w`, `-D`, dataDir, `start`);
 } else if (isWindows()) {
   const supportedVersion = process.env['ImageOS'] == 'win25' ? 17 : 14;
   if (postgresVersion != supportedVersion) {
@@ -125,8 +125,8 @@ if (isMac()) {
   setConfig(process.env.PGDATA);
 
   // start
-  run(`sc config postgresql-x64-${supportedVersion} start=auto`);
-  run(`net start postgresql-x64-${supportedVersion}`);
+  run(`sc`, `config`, `postgresql-x64-${supportedVersion}`, `start=auto`);
+  run(`net`, `start`, `postgresql-x64-${supportedVersion}`);
 
   bin = process.env.PGBIN;
 } else {
@@ -135,32 +135,32 @@ if (isMac()) {
     // beta versions require extra component
     // development snapshots require this and -snapshot after pgdg
     // https://wiki.postgresql.org/wiki/Apt/FAQ
-    const suffix = postgresVersion >= 18 ? ` ${postgresVersion}` : "";
-    const snapshot = postgresVersion >= 19 ? `-snapshot` : "";
-    run(`curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null`)
-    run(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg${snapshot} main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
+    const suffix = postgresVersion >= 18 ? ` ${postgresVersion}` : '';
+    const snapshot = postgresVersion >= 19 ? `-snapshot` : '';
+    runUnsafe(`curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null`)
+    runUnsafe(`echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg${snapshot} main${suffix}" | sudo tee /etc/apt/sources.list.d/pgdg.list`);
   }
 
   if (postgresVersion != defaultVersion || isArm()) {
     // remove previous cluster so port 5432 is used
     if (!isArm()) {
-      run(`sudo pg_dropcluster ${defaultVersion} main`);
+      run(`sudo`, `pg_dropcluster`, defaultVersion, `main`);
 
       if (postgresVersion < defaultVersion) {
-        run(`sudo apt-get remove postgresql-${defaultVersion}`);
+        run(`sudo`, `apt-get`, `remove`, `postgresql-${defaultVersion}`);
       }
     }
 
     // install new version
-    run(`sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/pgdg.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"`);
-    run(`sudo apt-get install postgresql-${postgresVersion}`);
+    run(`sudo`, `apt-get`, `update`, `-o`, `Dir::Etc::sourcelist=sources.list.d/pgdg.list`, `-o`, `Dir::Etc::sourceparts=-`, `-o`, `APT::Get::List-Cleanup=0`);
+    run(`sudo`, `apt-get`, `install`, `postgresql-${postgresVersion}`);
   }
 
   const devFiles = process.env['INPUT_DEV-FILES'];
   // maybe support other truthy values in future
   if (devFiles == 'true') {
-    run(`sudo apt-get update`);
-    run(`sudo apt-get install postgresql-server-dev-${postgresVersion}`);
+    run(`sudo`, `apt-get`, `update`);
+    run(`sudo`, `apt-get`, `install`, `postgresql-server-dev-${postgresVersion}`);
   }
 
   const dataDir = `/etc/postgresql/${postgresVersion}/main`;
@@ -169,16 +169,16 @@ if (isMac()) {
 
   // start
   const startCmd = isArm() ? `restart` : `start`;
-  run(`sudo systemctl ${startCmd} postgresql@${postgresVersion}-main`);
+  run(`sudo`, `systemctl`, startCmd, `postgresql@${postgresVersion}-main`);
 
   // add user
-  run(`sudo -iu postgres createuser -s $USER`);
+  run(`sudo`, `-iu`, `postgres`, `createuser`, `-s`, process.env['USER']);
 
   bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
 }
 
 if (database) {
-  runSafe(path.join(bin, "createdb"), database);
+  run(path.join(bin, 'createdb'), database);
 }
 
 addToPath(bin);
