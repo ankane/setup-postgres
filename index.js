@@ -89,9 +89,8 @@ if (![19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
 }
 
 const database = process.env['INPUT_DATABASE'];
-const user = process.env['USER'];
-if (user && user != 'runner' && user != 'runneradmin') {
-  // TODO fix
+const user = process.env['INPUT_USER'] || process.env['USER'];
+if (!/^[a-z0-9_-]$/i.test(user)) {
   throw `Unsupported user: ${user}`;
 }
 const userExists = user == process.env['USER'] && (isMac() || isWindows());

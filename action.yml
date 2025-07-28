@@ -6,6 +6,8 @@ inputs:
     description: Set config
   database:
     description: Database to create
+  user:
+    description: User to create
   dev-files:
     description: Install development files
 runs:
