@@ -47,9 +47,7 @@ function setConfig(dir) {
     if (isMac() || isWindows()) {
       fs.appendFileSync(file, config);
     } else {
-      const tmpfile = '/tmp/postgresql.conf';
-      fs.writeFileSync(tmpfile, config);
-      execSync(`cat ${tmpfile} | sudo tee -a ${file}`);
+      spawnSync(`sudo`, [`tee`, `-a`, file], {input: config});
     }
   }
 }
