@@ -5,7 +5,7 @@ const spawnSync = require('child_process').spawnSync;
 
 function run() {
   const args = Array.from(arguments);
-  console.log(args.map(v => v.includes(' ') ? `"${v}"` : v).join(' '));
+  console.log(args.map(v => v.toString().includes(' ') ? `"${v}"` : v).join(' '));
   const command = args.shift();
   // spawn is safer and more lightweight than exec
   const ret = spawnSync(command, args, {stdio: 'inherit'});
