@@ -106,11 +106,11 @@ if (isMac()) {
     }
 
     if (!formulaPresent(`postgresql@${postgresVersion}`)) {
-      run(`brew`, `update`);
+      run(`brew`, `update`, `--quiet`);
     }
 
     // install new version
-    run(`brew`, `install`, `postgresql@${postgresVersion}`);
+    run(`brew`, `install`, `--quiet`, `postgresql@${postgresVersion}`);
   }
 
   setConfig(dataDir);
@@ -153,15 +153,15 @@ if (isMac()) {
     }
 
     // install new version
-    run(`sudo`, `apt-get`, `update`, `-o`, `Dir::Etc::sourcelist=sources.list.d/pgdg.list`, `-o`, `Dir::Etc::sourceparts=-`, `-o`, `APT::Get::List-Cleanup=0`);
-    run(`sudo`, `apt-get`, `install`, `postgresql-${postgresVersion}`);
+    run(`sudo`, `apt-get`, `-qq`, `update`, `-o`, `Dir::Etc::sourcelist=sources.list.d/pgdg.list`, `-o`, `Dir::Etc::sourceparts=-`, `-o`, `APT::Get::List-Cleanup=0`);
+    run(`sudo`, `apt-get`, `-qq`, `-o`, `Dpkg::Use-Pty=0`, `install`, `postgresql-${postgresVersion}`);
   }
 
   const devFiles = process.env['INPUT_DEV-FILES'];
   // maybe support other truthy values in future
   if (devFiles == 'true') {
-    run(`sudo`, `apt-get`, `update`);
-    run(`sudo`, `apt-get`, `install`, `postgresql-server-dev-${postgresVersion}`);
+    run(`sudo`, `apt-get`, `-qq`, `update`);
+    run(`sudo`, `apt-get`, `-qq`, `-o`, `Dpkg::Use-Pty=0`, `install`, `postgresql-server-dev-${postgresVersion}`);
   }
 
   const dataDir = `/etc/postgresql/${postgresVersion}/main`;
