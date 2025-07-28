@@ -10,7 +10,6 @@ function run() {
   let env = Object.assign({}, process.env);
   env.HOMEBREW_NO_AUTO_UPDATE = '1';
   env.HOMEBREW_NO_INSTALL_CLEANUP = '1';
-  env.HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK = '1';
   // spawn is safer and more lightweight than exec
   const ret = spawnSync(command, args, {stdio: 'inherit', env: env});
   if (ret.status !== 0) {
