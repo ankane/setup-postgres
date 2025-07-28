@@ -90,8 +90,10 @@ if (![19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
 }
 
 const database = process.env['INPUT_DATABASE'];
+const user = (isMac() || isWindows()) ? null : process.env['USER'];
 
 let bin;
+let cmdPrefix = [];
 
 if (isMac()) {
   const prefix = isArm() ? '/opt/homebrew' : '/usr/local';
@@ -172,10 +174,12 @@ if (isMac()) {
   const startCmd = isArm() ? `restart` : `start`;
   run(`sudo`, `systemctl`, startCmd, `postgresql@${postgresVersion}-main`);
 
-  // add user
-  run(`sudo`, `-iu`, `postgres`, `createuser`, `-s`, process.env['USER']);
-
   bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
+  cmdPrefix = [`sudo`, `-iu`, `postgres`];
+}
+
+if (user) {
+  run(...cmdPrefix, path.join(bin, 'createuser'), `-s`, user);
 }
 
 if (database) {
