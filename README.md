@@ -63,6 +63,16 @@ Create a database
           database: testdb
 ```
 
+... or multiple databases:
+
+```yml
+      - uses: ankane/setup-postgres@v1
+        with:
+          database: |
+            testdb
+            testdb2
+```
+
 Set `postgresql.conf` config
 
 ```yml

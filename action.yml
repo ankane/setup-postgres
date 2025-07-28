@@ -5,7 +5,7 @@ inputs:
   config:
     description: Set config
   database:
-    description: Database to create
+    description: Database(s) to create
   dev-files:
     description: Install development files
 runs:
