@@ -103,7 +103,6 @@ if (isMac()) {
   const prefix = isArm() ? '/opt/homebrew' : '/usr/local';
 
   bin = `${prefix}/opt/postgresql@${postgresVersion}/bin`;
-  let dataDir = `${prefix}/var/postgresql@${postgresVersion}`;
 
   if (!fs.existsSync(bin)) {
     if (fs.existsSync(`${prefix}/opt/postgresql@14`)) {
@@ -119,6 +118,8 @@ if (isMac()) {
     run(`brew`, `install`, `--quiet`, `postgresql@${postgresVersion}`);
   }
 
+  // update config
+  const dataDir = `${prefix}/var/postgresql@${postgresVersion}`;
   setConfig(dataDir);
 
   // start
@@ -129,7 +130,9 @@ if (isMac()) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
 
-  setConfig(process.env.PGDATA);
+  // update config
+  const dataDir = process.env.PGDATA;
+  setConfig(dataDir);
 
   // start
   run(`sc`, `config`, `postgresql-x64-${supportedVersion}`, `start=auto`);
@@ -170,6 +173,7 @@ if (isMac()) {
     run(`sudo`, `apt-get`, `-qq`, `-o`, `Dpkg::Use-Pty=0`, `install`, `postgresql-server-dev-${postgresVersion}`);
   }
 
+  // update config
   const dataDir = `/etc/postgresql/${postgresVersion}/main`;
   setConfig(dataDir);
   updateHba(dataDir, user);
