@@ -193,7 +193,7 @@ if (isMac()) {
 }
 
 if (!userExists) {
-  run(...cmdPrefix, path.join(bin, 'createuser'), `-s`, user);
+  run(...cmdPrefix, path.join(bin, 'createuser'), '-p', 5433, `-s`, user);
 }
 
 if (database) {
