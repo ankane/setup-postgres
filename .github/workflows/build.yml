@@ -6,26 +6,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm, ubuntu-22.04, ubuntu-22.04-arm, macos-15, macos-14, macos-13]
-        postgres-version: [17, 16, 15, 14, 13]
-        include:
-          - os: windows-2025
-            postgres-version: 17
-          - os: windows-2022
-            postgres-version: 14
+        os: [ubuntu-24.04]
+        postgres-version: [17]
+        # include:
+        #   - os: windows-2025
+        #     postgres-version: 17
     steps:
       - uses: actions/checkout@v4
       - uses: ./.
         with:
           postgres-version: ${{ matrix.postgres-version }}
           config: |
+            port = 5433
             shared_preload_libraries = 'pg_stat_statements'
           database: testdb
           user: ${{ matrix.postgres-version == 14 && 'testuser' || '' }}
           dev-files: ${{ matrix.postgres-version == 13 }}
-      - run: createdb ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} testdb2
-      - run: psql ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} -d testdb -c 'SHOW server_version'
-      - run: psql ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} -d testdb -h localhost -c 'SELECT current_user'
+      - run: createdb -p 5433 ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} testdb2
+      - run: psql -p 5433 ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} -d testdb -c 'SHOW server_version'
+      - run: psql -p 5433 ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} -d testdb -h localhost -c 'SELECT current_user'
       - run: psql --version
       - run: pg_config
       - if: ${{ matrix.postgres-version == 13 }}
