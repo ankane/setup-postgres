@@ -1,4 +1,5 @@
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const spawnSync = require('child_process').spawnSync;
 
@@ -89,12 +90,13 @@ if (![19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
 }
 
 const database = process.env['INPUT_DATABASE'];
-const user = process.env['USER'];
-if (user && user != 'runner' && user != 'runneradmin') {
+const defaultUser = os.userInfo().username;
+const user = defaultUser;
+if (user != 'runner' && user != 'runneradmin') {
   // TODO fix
   throw `Unsupported user: ${user}`;
 }
-const userExists = user == process.env['USER'] && (isMac() || isWindows());
+const userExists = user == defaultUser && (isMac() || isWindows());
 
 let bin;
 let cmdPrefix = [];
