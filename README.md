@@ -18,11 +18,10 @@ Add it as a step to your workflow
 
 The default credentials are:
 
-- user: `runner` on Linux and Mac, `postgres` on Windows
+- user: `runner` (the OS user) on Linux and Mac, `postgres` on Windows
 - password: none
 - host: `localhost` or socket
 - port: `5432`
-- database: `postgres`
 
 ## Versions
 
