@@ -163,7 +163,7 @@ if (isMac()) {
       run(`sudo`, `pg_dropcluster`, defaultVersion, `main`);
 
       if (postgresVersion < defaultVersion) {
-        run(`sudo`, `apt-get`, `remove`, `postgresql-${defaultVersion}`);
+        run(`sudo`, `apt-get`, `-qq`, `-o`, `Dpkg::Use-Pty=0`, `remove`, `postgresql-${defaultVersion}`);
       }
     }
 
