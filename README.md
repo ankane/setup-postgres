@@ -18,7 +18,7 @@ Add it as a step to your workflow
 
 The default credentials are:
 
-- user: the OS user (`runner` on Linux and Mac, `runneradmin` on Windows)
+- user: `runner` on Linux and Mac, `postgres` on Windows
 - password: none
 - host: `localhost` or socket
 - port: `5432`
