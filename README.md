@@ -70,7 +70,7 @@ Create a database
           database: testdb
 ```
 
-Create a user
+Specify a user
 
 ```yml
       - uses: ankane/setup-postgres@v1
