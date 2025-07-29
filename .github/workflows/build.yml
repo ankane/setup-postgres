@@ -25,7 +25,7 @@ jobs:
           dev-files: ${{ matrix.postgres-version == 13 }}
       - run: createdb ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} testdb2
       - run: psql ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} -d testdb -c 'SHOW server_version'
-      - run: psql ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} -d testdb -h localhost -c 'SHOW server_version'
+      - run: psql ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} -d testdb -h localhost -c 'SELECT current_user'
       - run: psql --version
       - run: pg_config
       - if: ${{ matrix.postgres-version == 13 }}
