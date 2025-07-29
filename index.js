@@ -50,8 +50,8 @@ function setConfig(dir) {
 function updateHba(dir, user) {
   const contents = `
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
-local   all             postgres                                peer
 local   all             ${user}                                 trust
+local   all             postgres                                peer
 local   all             all                                     peer
 host    all             ${user}         127.0.0.1/32            trust
 host    all             ${user}         ::1/128                 trust
@@ -95,7 +95,7 @@ const user = process.env['INPUT_USER'] || defaultUser;
 if (!/^[a-z0-9_-]+$/i.test(user)) {
   throw `Unsupported user: ${user}`;
 }
-const userExists = user == 'postgres' || (isMac() && user == defaultUser);
+const userExists = isMac() ? user == defaultUser : user == 'postgres';
 
 let bin;
 let cmdPrefix = [];
