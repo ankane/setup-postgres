@@ -16,6 +16,14 @@ Add it as a step to your workflow
       - uses: ankane/setup-postgres@v1
 ```
 
+The default credentials are:
+
+- user: the OS user (`runner` on Linux and Mac, `runneradmin` on Windows)
+- password: none
+- host: `localhost` or socket
+- port: `5432`
+- database: `postgres`
+
 ## Versions
 
 Specify a version
