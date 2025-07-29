@@ -21,10 +21,11 @@ jobs:
           config: |
             shared_preload_libraries = 'pg_stat_statements'
           database: testdb
+          user: ${{ matrix.postgres-version == 14 && 'testuser' || '' }}
           dev-files: ${{ matrix.postgres-version == 13 }}
-      - run: createdb testdb2
-      - run: psql -d testdb -c 'SHOW server_version'
-      - run: psql -d testdb -h localhost -c 'SHOW server_version'
+      - run: createdb ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} testdb2
+      - run: psql ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} -d testdb -c 'SHOW server_version'
+      - run: psql ${{ matrix.postgres-version == 14 && '-U testuser' || '' }} -d testdb -h localhost -c 'SHOW server_version'
       - run: psql --version
       - run: pg_config
       - if: ${{ matrix.postgres-version == 13 }}

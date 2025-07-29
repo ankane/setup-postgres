@@ -90,13 +90,12 @@ if (![19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9.6].includes(postgresVersion)) {
 }
 
 const database = process.env['INPUT_DATABASE'];
-const defaultUser = os.userInfo().username;
-const user = defaultUser;
-if (user != 'runner' && user != 'runneradmin') {
-  // TODO fix
+const defaultUser = isWindows() ? 'postgres' : os.userInfo().username;
+const user = process.env['INPUT_USER'] || defaultUser;
+if (!/^[a-z0-9_-]+$/i.test(user)) {
   throw `Unsupported user: ${user}`;
 }
-const userExists = user == defaultUser && (isMac() || isWindows());
+const userExists = user == 'postgres' || (isMac() && user == defaultUser);
 
 let bin;
 let cmdPrefix = [];
@@ -198,7 +197,7 @@ if (!userExists) {
 }
 
 if (database) {
-  run(path.join(bin, 'createdb'), database);
+  run(path.join(bin, 'createdb'), '-U', user, database);
 }
 
 addToPath(bin);
