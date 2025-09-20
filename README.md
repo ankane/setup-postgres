@@ -42,6 +42,7 @@ Version | `17` | `16` | `15` | `14` | `13`
 `ubuntu-22.04` | ✓ | ✓ | ✓ | default | ✓
 `ubuntu-22.04-arm` | ✓ | ✓ | ✓ | default | ✓
 `macos-15` | default | ✓ | ✓ | ✓ | ✓
+`macos-15-intel` | default | ✓ | ✓ | ✓ | ✓
 `macos-14` | default | ✓ | ✓ | ✓ | ✓
 `macos-13` | default | ✓ | ✓ | ✓ | ✓
 `windows-2025` | default | | | | |
