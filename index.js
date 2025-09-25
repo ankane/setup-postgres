@@ -148,7 +148,7 @@ if (isMac()) {
     // beta versions require extra component
     // development snapshots require this and -snapshot after pgdg
     // https://wiki.postgresql.org/wiki/Apt/FAQ
-    const suffix = postgresVersion >= 18 ? ` ${postgresVersion}` : '';
+    const suffix = postgresVersion >= 19 ? ` ${postgresVersion}` : '';
     const snapshot = postgresVersion >= 19 ? `-snapshot` : '';
     run(`sudo`, `install`, `-d`, `/usr/share/postgresql-common/pgdg`);
     run(`sudo`, `curl`, `-s`, `-o`, `/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc`, `--fail`, `https://www.postgresql.org/media/keys/ACCC4CF8.asc`);
