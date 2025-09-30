@@ -168,15 +168,21 @@ if (isMac()) {
     }
 
     // install new version
+    // skip man-db triggers for performance
     run(`sudo`, `apt-get`, `-qq`, `update`, `-o`, `Dir::Etc::sourcelist=sources.list.d/pgdg.list`, `-o`, `Dir::Etc::sourceparts=-`, `-o`, `APT::Get::List-Cleanup=0`);
+    run(`sudo`, `mv`, `/var/lib/man-db/auto-update`, `/var/lib/man-db/auto-update.bak`);
     run(`sudo`, `apt-get`, `-qq`, `-o`, `Dpkg::Use-Pty=0`, `install`, `postgresql-${postgresVersion}`);
+    run(`sudo`, `mv`, `/var/lib/man-db/auto-update.bak`, `/var/lib/man-db/auto-update`);
   }
 
   const devFiles = process.env['INPUT_DEV-FILES'];
   // maybe support other truthy values in future
   if (devFiles == 'true') {
+    // skip man-db triggers for performance
     run(`sudo`, `apt-get`, `-qq`, `update`);
+    run(`sudo`, `mv`, `/var/lib/man-db/auto-update`, `/var/lib/man-db/auto-update.bak`);
     run(`sudo`, `apt-get`, `-qq`, `-o`, `Dpkg::Use-Pty=0`, `install`, `postgresql-server-dev-${postgresVersion}`);
+    run(`sudo`, `mv`, `/var/lib/man-db/auto-update.bak`, `/var/lib/man-db/auto-update`);
   }
 
   // update config
