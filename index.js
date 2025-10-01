@@ -151,7 +151,7 @@ if (isMac()) {
     const suffix = postgresVersion >= 19 ? ` ${postgresVersion}` : '';
     const snapshot = postgresVersion >= 19 ? `-snapshot` : '';
     run(`sudo`, `install`, `-d`, `/usr/share/postgresql-common/pgdg`);
-    run(`sudo`, `curl`, `-s`, `-o`, `/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc`, `--fail`, `https://www.postgresql.org/media/keys/ACCC4CF8.asc`);
+    run(`sudo`, `cp`, path.join(__dirname, `keys`, `ACCC4CF8.asc`), `/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc`);
     const codename =  spawnSync(`lsb_release`, [`-cs`], {encoding: 'utf-8'}).stdout.trim();
     const pgdgList = `deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt ${codename}-pgdg${snapshot} main${suffix}\n`;
     spawnSync(`sudo`, [`tee`, `/etc/apt/sources.list.d/pgdg.list`], {input: pgdgList});
