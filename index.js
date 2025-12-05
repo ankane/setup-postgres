@@ -127,6 +127,10 @@ if (isMac()) {
   // start
   run(`${bin}/pg_ctl`, `-w`, `-D`, dataDir, `start`);
 } else if (isWindows()) {
+  if (isArm()) {
+    throw `Windows ARM not supported`;
+  }
+
   const supportedVersion = process.env['ImageOS'] == 'win25' ? 17 : 14;
   if (postgresVersion != supportedVersion) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
