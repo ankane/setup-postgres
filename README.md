@@ -45,7 +45,6 @@ Version | `18` | `17` | `16` | `15` | `14` | `13`
 `macos-15` | ✓ | default | ✓ | ✓ | ✓ | ✓
 `macos-15-intel` | ✓ | default | ✓ | ✓ | ✓ | ✓
 `macos-14` | ✓ | default | ✓ | ✓ | ✓ | ✓
-`macos-13` | | default | ✓ | ✓ | ✓ | ✓
 `windows-2025` | | default | | | | |
 `windows-2022` | | | | | default | |
 
