@@ -10,6 +10,7 @@ function run() {
   let env = Object.assign({}, process.env);
   env.HOMEBREW_NO_AUTO_UPDATE = '1';
   env.HOMEBREW_NO_INSTALL_CLEANUP = '1';
+  env.SYSTEMD_IN_CHROOT = '0';
   // spawn is safer and more lightweight than exec
   const ret = spawnSync(command, args, {stdio: 'inherit', env: env});
   if (ret.status !== 0) {
@@ -195,7 +196,7 @@ if (isMac()) {
   updateHba(dataDir, user);
 
   // start
-  const startCmd = slim ? 'enable' : (isArm() ? `restart` : `start`);
+  const startCmd = isArm() ? `restart` : `start`;
   run(`sudo`, `systemctl`, startCmd, `postgresql@${postgresVersion}-main`);
 
   bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
