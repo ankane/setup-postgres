@@ -197,7 +197,7 @@ if (isMac()) {
 
   // start
   const startCmd = isArm() ? `restart` : `start`;
-  run(`sudo`, `systemctl`, startCmd, `postgresql@${postgresVersion}-main`);
+  run(`sudo`, `--preserve-env=SYSTEMD_IN_CHROOT`, `systemctl`, startCmd, `postgresql@${postgresVersion}-main`);
 
   bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
   cmdPrefix = [`sudo`, `-iu`, `postgres`];
