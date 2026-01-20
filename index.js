@@ -175,7 +175,7 @@ if (isMac()) {
 
     // install new version
     if (slim) {
-      run(`sudo`, `apt-get`, `-qq`, `update`, `APT::Get::List-Cleanup=0`);
+      run(`sudo`, `apt-get`, `-qq`, `update`, `-o`, `APT::Get::List-Cleanup=0`);
     } else {
       run(`sudo`, `apt-get`, `-qq`, `update`, `-o`, `Dir::Etc::sourcelist=sources.list.d/pgdg.list`, `-o`, `Dir::Etc::sourceparts=-`, `-o`, `APT::Get::List-Cleanup=0`);
     }
