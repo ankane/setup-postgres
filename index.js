@@ -97,6 +97,8 @@ if (!/^[a-z0-9_-]+$/i.test(user)) {
 }
 const userExists = isMac() ? user == defaultUser : user == 'postgres';
 
+console.log(process.env['ImageOS']);
+
 let bin;
 let cmdPrefix = [];
 
@@ -135,8 +137,6 @@ if (isMac()) {
   if (postgresVersion != supportedVersion) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
-
-  console.log(process.env['ImageOS']);
 
   // update config
   const dataDir = process.env.PGDATA;
