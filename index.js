@@ -97,8 +97,6 @@ if (!/^[a-z0-9_-]+$/i.test(user)) {
 }
 const userExists = isMac() ? user == defaultUser : user == 'postgres';
 
-console.log(process.env['ImageOS']);
-
 let bin;
 let cmdPrefix = [];
 
@@ -165,7 +163,7 @@ if (isMac()) {
 
   if (postgresVersion != defaultVersion || isArm()) {
     // remove previous cluster so port 5432 is used
-    if (!isArm()) {
+    if (!isArm() && typeof process.env['ImageOS'] !== 'undefined') {
       run(`sudo`, `pg_dropcluster`, defaultVersion, `main`);
 
       if (postgresVersion < defaultVersion) {
