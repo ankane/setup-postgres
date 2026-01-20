@@ -136,6 +136,8 @@ if (isMac()) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
 
+  console.log(process.env['ImageOS']);
+
   // update config
   const dataDir = process.env.PGDATA;
   setConfig(dataDir);
