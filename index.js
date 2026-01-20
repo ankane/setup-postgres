@@ -174,7 +174,11 @@ if (isMac()) {
     }
 
     // install new version
-    run(`sudo`, `apt-get`, `-qq`, `update`, `-o`, `Dir::Etc::sourcelist=sources.list.d/pgdg.list`, `-o`, `Dir::Etc::sourceparts=-`, `-o`, `APT::Get::List-Cleanup=0`);
+    if (slim) {
+      run(`sudo`, `apt-get`, `-qq`, `update`, `APT::Get::List-Cleanup=0`);
+    } else {
+      run(`sudo`, `apt-get`, `-qq`, `update`, `-o`, `Dir::Etc::sourcelist=sources.list.d/pgdg.list`, `-o`, `Dir::Etc::sourceparts=-`, `-o`, `APT::Get::List-Cleanup=0`);
+    }
     run(`sudo`, `apt-get`, `-qq`, `-o`, `Dpkg::Use-Pty=0`, `install`, `postgresql-${postgresVersion}`);
   }
 
