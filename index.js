@@ -161,11 +161,11 @@ if (isMac()) {
     spawnSync(`sudo`, [`tee`, `/etc/apt/sources.list.d/pgdg.list`], {input: pgdgList});
   }
 
-  console.log(process.env['ImageOS']);
+  const slim = process.env['ImageOS'] === 'undefined';
 
-  if (postgresVersion != defaultVersion || isArm()) {
+  if (postgresVersion != defaultVersion || isArm() || slim) {
     // remove previous cluster so port 5432 is used
-    if (!isArm() && typeof process.env['ImageOS'] !== 'undefined') {
+    if (!isArm() && !slim) {
       run(`sudo`, `pg_dropcluster`, defaultVersion, `main`);
 
       if (postgresVersion < defaultVersion) {
