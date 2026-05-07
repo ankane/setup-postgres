@@ -7,7 +7,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm, ubuntu-22.04, ubuntu-22.04-arm, macos-26, macos-15, macos-15-intel, macos-14]
-        postgres-version: [18, 17, 16, 15, 14, 13]
+        postgres-version: [18, 17, 16, 15, 14]
         include:
           - os: windows-2025
             postgres-version: 17
@@ -22,11 +22,11 @@ jobs:
             shared_preload_libraries = 'pg_stat_statements'
           database: testdb
           user: ${{ matrix.postgres-version == 14 && 'testuser' || '' }}
-          dev-files: ${{ matrix.postgres-version == 13 }}
+          dev-files: ${{ matrix.postgres-version == 15 }}
       - run: createdb testdb2 ${{ matrix.postgres-version == 14 && '-U testuser' || '' }}
       - run: psql -d testdb -c 'SHOW server_version' ${{ matrix.postgres-version == 14 && '-U testuser' || '' }}
       - run: psql -d testdb -h localhost -c 'SELECT current_user' ${{ matrix.postgres-version == 14 && '-U testuser' || '' }}
       - run: psql --version
       - run: pg_config
-      - if: ${{ matrix.postgres-version == 13 }}
+      - if: ${{ matrix.postgres-version == 15 }}
         run: test -f $(pg_config --includedir-server)/postgres.h
