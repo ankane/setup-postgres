@@ -132,6 +132,7 @@ if (isMac()) {
   }
 
   const supportedVersion = process.env['ImageOS'] == 'win25' ? 17 : 14;
+  console.log(process.env['ImageOS']);
   if (postgresVersion != supportedVersion) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
