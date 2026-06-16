@@ -74,7 +74,7 @@ function formulaPresent(formula) {
 }
 
 function getDefaultVersion() {
-  if (isMac() || process.env['ImageOS'] == 'win25') {
+  if (isMac() || process.env['ImageOS'] == 'win25' || process.env['ImageOS'] == 'win25-vs2026') {
     return 17;
   } else if (process.env['ImageOS'] == 'ubuntu24') {
     return 16;
@@ -131,8 +131,7 @@ if (isMac()) {
     throw `Windows ARM not supported`;
   }
 
-  const supportedVersion = process.env['ImageOS'] == 'win25' ? 17 : 14;
-  console.log(process.env['ImageOS']);
+  const supportedVersion = (process.env['ImageOS'] == 'win25' || process.env['ImageOS'] == 'win25-vs2026') ? 17 : 14;
   if (postgresVersion != supportedVersion) {
     throw `Postgres version not supported on Windows: ${postgresVersion}`;
   }
