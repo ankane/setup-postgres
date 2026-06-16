@@ -79,7 +79,7 @@ function getDefaultVersion() {
     return 18;
   } else if (isMac() || image == 'win25' || image == 'win25-vs2026') {
     return 17;
-  } else if (image == 'ubuntu24') {
+  } else if (image == 'ubuntu24' || image == 'ubuntu24-arm64') {
     return 16;
   } else {
     return 14;
