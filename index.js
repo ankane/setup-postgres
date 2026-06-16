@@ -74,9 +74,12 @@ function formulaPresent(formula) {
 }
 
 function getDefaultVersion() {
-  if (isMac() || process.env['ImageOS'] == 'win25' || process.env['ImageOS'] == 'win25-vs2026') {
+  const image = process.env['ImageOS'];
+  if (image == 'ubuntu26' || image == 'ubuntu26-arm64') {
+    return 18;
+  } else if (isMac() || image == 'win25' || image == 'win25-vs2026') {
     return 17;
-  } else if (process.env['ImageOS'] == 'ubuntu24') {
+  } else if (image == 'ubuntu24') {
     return 16;
   } else {
     return 14;

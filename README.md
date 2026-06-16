@@ -37,6 +37,8 @@ Currently supports
 
 Version | `18` | `17` | `16` | `15` | `14`
 --- | --- | --- | --- | --- | ---
+`ubuntu-26.04` | default | ✓ | ✓ | ✓ | ✓
+`ubuntu-26.04-arm` | default | ✓ | ✓ | ✓ | ✓
 `ubuntu-24.04` | ✓ | ✓ | default | ✓ | ✓
 `ubuntu-24.04-arm` | ✓ | ✓ | default | ✓ | ✓
 `ubuntu-22.04` | ✓ | ✓ | ✓ | ✓ | default
