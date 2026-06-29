@@ -75,9 +75,9 @@ function formulaPresent(formula) {
 
 function getDefaultVersion() {
   const image = process.env['ImageOS'];
-  if (image == 'ubuntu26' || image == 'ubuntu26-arm64') {
+  if (image == 'ubuntu26' || image == 'ubuntu26-arm64' || isMac()) {
     return 18;
-  } else if (isMac() || image == 'win25' || image == 'win25-vs2026') {
+  } else if (image == 'win25' || image == 'win25-vs2026') {
     return 17;
   } else if (image == 'ubuntu24' || image == 'ubuntu24-arm64') {
     return 16;
