@@ -164,14 +164,12 @@ if (isMac()) {
     spawnSync(`sudo`, [`tee`, `/etc/apt/sources.list.d/pgdg.list`], {input: pgdgList});
   }
 
-  if (postgresVersion != defaultVersion || isArm()) {
+  if (postgresVersion != defaultVersion) {
     // remove previous cluster so port 5432 is used
-    if (!isArm()) {
-      run(`sudo`, `pg_dropcluster`, defaultVersion, `main`);
+    run(`sudo`, `pg_dropcluster`, defaultVersion, `main`);
 
-      if (postgresVersion < defaultVersion) {
-        run(`sudo`, `apt-get`, `-qq`, `-o`, `Dpkg::Use-Pty=0`, `remove`, `postgresql-${defaultVersion}`);
-      }
+    if (postgresVersion < defaultVersion) {
+      run(`sudo`, `apt-get`, `-qq`, `-o`, `Dpkg::Use-Pty=0`, `remove`, `postgresql-${defaultVersion}`);
     }
 
     // install new version
@@ -192,8 +190,7 @@ if (isMac()) {
   updateHba(dataDir, user);
 
   // start
-  const startCmd = isArm() ? `restart` : `start`;
-  run(`sudo`, `systemctl`, startCmd, `postgresql@${postgresVersion}-main`);
+  run(`sudo`, `systemctl`, `start`, `postgresql@${postgresVersion}-main`);
 
   bin = `/usr/lib/postgresql/${postgresVersion}/bin`;
   cmdPrefix = [`sudo`, `-iu`, `postgres`];
