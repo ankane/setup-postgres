@@ -30,31 +30,31 @@ Specify a version
 ```yml
       - uses: ankane/setup-postgres@v1
         with:
-          postgres-version: 18
+          postgres-version: 19
 ```
 
 Currently supports
 
-Version | `18` | `17` | `16` | `15` | `14`
---- | --- | --- | --- | --- | ---
-`ubuntu-26.04` | default | ✓ | ✓ | ✓ | ✓
-`ubuntu-26.04-arm` | default | ✓ | ✓ | ✓ | ✓
-`ubuntu-24.04` | ✓ | ✓ | default | ✓ | ✓
-`ubuntu-24.04-arm` | ✓ | ✓ | default | ✓ | ✓
-`ubuntu-22.04` | ✓ | ✓ | ✓ | ✓ | default
-`ubuntu-22.04-arm` | ✓ | ✓ | ✓ | ✓ | default
-`macos-26` | default | ✓ | ✓ | ✓ | ✓
-`macos-15` | default | ✓ | ✓ | ✓ | ✓
-`macos-15-intel` | default | ✓ | ✓ | ✓ | ✓
-`windows-2025` | | default | | | |
-`windows-2022` | | | | | default |
+Version | `19` | `18` | `17` | `16` | `15` | `14`
+--- | --- | --- | --- | --- | --- | ---
+`ubuntu-26.04` | ✓ | default | ✓ | ✓ | ✓ | ✓
+`ubuntu-26.04-arm` | ✓ | default | ✓ | ✓ | ✓ | ✓
+`ubuntu-24.04` | ✓ | ✓ | ✓ | default | ✓ | ✓
+`ubuntu-24.04-arm` | ✓ | ✓ | ✓ | default | ✓ | ✓
+`ubuntu-22.04` | ✓ | ✓ | ✓ | ✓ | ✓ | default
+`ubuntu-22.04-arm` | ✓ | ✓ | ✓ | ✓ | ✓ | default
+`macos-26` | ✓ | default | ✓ | ✓ | ✓ | ✓
+`macos-15` | ✓ | default | ✓ | ✓ | ✓ | ✓
+`macos-15-intel` | ✓ | default | ✓ | ✓ | ✓ | ✓
+`windows-2025` | | | default | | | |
+`windows-2022` | |  | | | | default |
 
 Test against multiple versions
 
 ```yml
     strategy:
       matrix:
-        postgres-version: [18, 17, 16, 15, 14]
+        postgres-version: [19, 18, 17, 16, 15, 14]
     steps:
       - uses: ankane/setup-postgres@v1
         with:
