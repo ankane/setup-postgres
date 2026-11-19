@@ -13,6 +13,9 @@ jobs:
             postgres-version: 17
           - os: windows-2022
             postgres-version: 14
+        exclude:
+          - os: macos-15-intel
+            postgres-version: 19
     steps:
       - uses: actions/checkout@v6
       - uses: ./.
