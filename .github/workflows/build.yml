@@ -8,14 +8,14 @@ jobs:
       matrix:
         os: [ubuntu-26.04, ubuntu-26.04-arm, ubuntu-24.04, ubuntu-24.04-arm, ubuntu-22.04, ubuntu-22.04-arm, macos-26, macos-15, macos-15-intel]
         postgres-version: [19, 18, 17, 16, 15, 14]
+        exclude:
+          - os: macos-15-intel
+            postgres-version: 19
         include:
           - os: windows-2025
             postgres-version: 17
           - os: windows-2022
             postgres-version: 14
-        exclude:
-          - os: macos-15-intel
-            postgres-version: 19
     steps:
       - uses: actions/checkout@v6
       - uses: ./.
